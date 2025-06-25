@@ -1,32 +1,37 @@
 <template>
-    <Head title="Dashboard" />
+    <Head title="tags" />
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="casa-pages">
-            <PageCard 
-                v-for="page in props.pages"
-                :key="page.id"
-                :page="page"
+            <TagCard
+                v-for="tag in props.tags"
+                :tag="tag"
+                :key="tag.name"
             />
         </div>
     </AppLayout>
 </template>
 
-<script setup lang="ts">
+<script
+    setup
+    lang="ts"
+>
 import AppLayout from "@/layouts/AppLayout.vue"
-import { Page } from "@/modules/domain/Types"
+import { Page, Tag } from "@/modules/domain/Types"
 import PageCard from "@/modules/pages/components/PageCard.vue"
+import TagCard from "@/modules/tags/components/TagCard.vue"
 import { type BreadcrumbItem } from "@/types"
 import { Head } from "@inertiajs/vue3"
 import { onMounted } from "vue"
 import PlaceholderPattern from "../components/PlaceholderPattern.vue"
 
 const props = defineProps<{
-    pages: Page[]
+    tags: Tag[]
 }>()
+
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: "Dashboard",
-        href: "/dashboard",
+        title: "Tags",
+        href: "/tags",
     },
 ]
 
