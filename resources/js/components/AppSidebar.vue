@@ -48,38 +48,32 @@ import {
 } from "@/components/ui/sidebar"
 import { type NavItem } from "@/types"
 import { Link } from "@inertiajs/vue3"
-import { BookOpen, Folder, LayoutGrid } from "lucide-vue-next"
 import AppLogo from "./AppLogo.vue"
 
 const mainNavItems: NavItem[] = [
     {
         title: "Dashboard",
         href: "/dashboard",
-        icon: LayoutGrid,
-        // isActive: true,
+        icon: 'dashboard',
+        isActive: true,
     },
     {
         title: "Tags",
         href: "/tags",
-        // icon: LayoutGrid,
+        icon: 'bookmark',
     },
     {
         title: "Newsletters",
         href: "/newsletters",
-        // icon: LayoutGrid,
+        icon: 'mail'
     },
 ]
 
 const footerNavItems: NavItem[] = [
     {
         title: "Github Repo",
-        href: "https://github.com/laravel/vue-starter-kit",
-        icon: Folder,
-    },
-    {
-        title: "Documentation",
-        href: "https://laravel.com/docs/starter-kits#vue",
-        icon: BookOpen,
+        href: "https://github.com/amiceli/papierjs",
+        icon: 'github',
     },
 ]
 </script>
