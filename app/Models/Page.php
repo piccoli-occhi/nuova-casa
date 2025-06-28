@@ -15,6 +15,7 @@ class Page extends Model
         return array(
             'id' => $this->tag->id,
             'name' => $this->tag->name,
+            'color' => $this->tag->color,
         );
     }
 
