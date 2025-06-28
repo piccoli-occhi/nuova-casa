@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StorePageRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class StorePageRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,8 +22,17 @@ class StorePageRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            //
-        ];
+        return array(
+            'title' => 'required|string',
+            'url' => [
+                'required',
+                'string',
+                Rule::unique('pages')->where(function ($query) {
+                    return $query->where('tag_id', $this->tag_id);
+                }),
+            ],
+            'icon' => 'required|string',
+            'tag_id' => 'required',
+        );
     }
 }
