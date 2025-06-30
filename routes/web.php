@@ -10,12 +10,21 @@ Route::get('/', function () {
     return Inertia::render('Welcome');
 })->name('home');
 
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('dashboard', [
-        AppController::class,
-        'dashboard'
-    ])->name('dashboard');
-});
+// app
+
+Route::middleware(['auth', 'verified'])
+    ->controller(AppController::class)
+    ->group(function () {
+        Route
+            ::get('dashboard', 'dashboard')
+            ->name('dashboard');
+        Route
+            ::get('/api/search', 'searXng')
+            ->name('sear-xng');
+        Route
+            ::get('proxy', 'proxy')
+            ->name('proxy');
+    });
 
 // tags
 
@@ -25,6 +34,9 @@ Route::middleware(['auth', 'verified'])
         Route
             ::get('/tags', 'index')
             ->name('tags');
+        Route
+            ::post('/api/tags', 'store')
+            ->name('create-tag');
         Route
             ::get('/tags/{tag}', 'show')
             ->name('tag');
@@ -47,6 +59,9 @@ Route::middleware(['auth', 'verified'])
         Route
             ::get('/api/pages/{page}/read', 'read')
             ->name('read-page');
+        // Route
+        //     ::get('/api/search', 'searXng')
+        //     ->name('sear-xng');
         Route
             ::get('/api/page/graph', 'openGraph')
             ->name('open-graph');
