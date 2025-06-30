@@ -12,7 +12,7 @@
         "vue-tsc": "^2.2.4"
     },
     "dependencies": {
-        "@amiceli/papierjs": "^0.8.0",
+        "@amiceli/papierjs": "0.9.0",
         "@biomejs/biome": "2.0.5",
         "@inertiajs/vue3": "^2.0.0",
         "@nanostores/vue": "^1.0.0",
@@ -21,6 +21,7 @@
         "@vueuse/core": "^12.8.2",
         "class-variance-authority": "^0.7.1",
         "clsx": "^2.1.1",
+        "colorthief": "^2.6.0",
         "concurrently": "^9.0.1",
         "laravel-vite-plugin": "^1.0",
         "lucide-vue-next": "^0.468.0",
