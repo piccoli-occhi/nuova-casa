@@ -12,12 +12,12 @@
 </template>
 
 <script setup lang="ts">
+import { Head } from "@inertiajs/vue3"
+import { onMounted } from "vue"
 import AppLayout from "@/layouts/AppLayout.vue"
 import { Page } from "@/modules/domain/Types"
 import PageCard from "@/modules/pages/components/PageCard.vue"
 import { type BreadcrumbItem } from "@/types"
-import { Head } from "@inertiajs/vue3"
-import { onMounted } from "vue"
 import PlaceholderPattern from "../components/PlaceholderPattern.vue"
 
 const props = defineProps<{
