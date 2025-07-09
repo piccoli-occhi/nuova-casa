@@ -5,6 +5,12 @@
         <div class="casa-tag-details">
             <div class="casa-tag-details__header">
                 <p-leaf>
+                    <div 
+                        class="border dark"
+                        :style="{background: props.tag.color}"
+                    ></div>
+                </p-leaf>
+                <p-leaf>
                     <h3>
                         {{ props.tag.name }}
                         &nbsp;
@@ -64,8 +70,14 @@ const breadcrumbs: BreadcrumbItem[] = [
     }
     .casa-tag-details__header {
         display: grid;
-        grid-template-columns: 1fr auto;
+        grid-template-columns: 30px 1fr auto;
         justify-content: space-between;
         align-items: center;
+        gap: 20px;
+
+        div {
+            height: 30px;
+            width: 30px;
+        }
     }
 </style>
