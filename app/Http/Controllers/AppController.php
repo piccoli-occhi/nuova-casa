@@ -30,7 +30,7 @@ class AppController extends Controller
         $response = Http::withHeaders([
             'User-Agent' => 'Mozilla/5.0',
         ])->get("$url/search", [
-            'q' => $word,
+            'q' => "$word logo",
             'categories' => 'images',
             'format' => 'json',
         ]);
@@ -39,7 +39,7 @@ class AppController extends Controller
             function ($item) {
                 return $item['img_src'];
             },
-            array_slice($response['results'], 0, 10)
+            array_slice($response['results'], 0, 20)
         );
 
         return collect($imageUrls)->map(function ($url) {
