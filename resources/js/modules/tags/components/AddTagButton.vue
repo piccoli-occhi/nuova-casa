@@ -169,7 +169,7 @@ onMounted(() => {
         }
 
         .tag__modal {
-            min-width: 400px;
+            min-width: 640px;
         }
 
         .modal__footer {

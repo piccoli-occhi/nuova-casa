@@ -12,6 +12,8 @@ export class PageStore {
 
     public readonly $status = atom<string>("")
 
+    public readonly $requiredInputs = atom<boolean>(false)
+
     public readonly $newPage = useForm({
         url: "",
         title: "",
@@ -31,29 +33,53 @@ export class PageStore {
         return PageStore.instance
     }
 
+    private requiredInputs() {
+        this.$inProgress.set(false)
+        this.$requiredInputs.set(true)
+    }
+
     public async openGraph() {
         const pageUrl = this.$newPage.url
 
         this.$inProgress.set(true)
-        const response = await fetch(route(`open-graph`, { url: pageUrl }))
-        const json: {
-            title: string
-            image?: string
-        } = await response.json()
 
-        this.$newPage.title = json.title ?? ""
-        this.$newPage.icon = json.image ?? "resources/assets/404_retro.png"
+        try {
+            const response = await fetch(route(`open-graph`, { url: pageUrl }))
 
-        setTimeout(() => {
+            if (response.status === 404) {
+                this.requiredInputs()
+
+                return
+            }
+
+            const json: {
+                title: string
+                image?: string
+            } = await response.json()
+
+            if (!json.title && !json.image) {
+                this.requiredInputs()
+                return
+            }
+
+            this.$newPage.title = json.title ?? ""
+            this.$newPage.icon = json.image ?? "resources/assets/404_retro.png"
+
+            setTimeout(() => {
+                this.$inProgress.set(false)
+                this.$graphDone.set(true)
+            }, 750)
+        } catch {
             this.$inProgress.set(false)
-            this.$graphDone.set(true)
-        }, 750)
+            this.$requiredInputs.set(true)
+        }
     }
 
     public async resetState() {
         this.$newPage.title = ""
         this.$newPage.icon = ""
         this.$graphDone.set(false)
+        this.$requiredInputs.set(false)
         this.$newPage.clearErrors()
         this.$status.set("")
     }
@@ -77,6 +103,7 @@ export function usePage() {
     const inProgress = useStore(store.$inProgress)
     const graphDone = useStore(store.$graphDone)
     const status = useStore(store.$status)
+    const requiredInputs = useStore(store.$requiredInputs)
 
     return {
         status,
@@ -84,5 +111,6 @@ export function usePage() {
         newPageForm: store.$newPage,
         inProgress,
         graphDone,
+        requiredInputs,
     }
 }

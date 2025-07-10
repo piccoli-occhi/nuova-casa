@@ -15,9 +15,35 @@
                         required
                         block
                         v-model="newPageForm.url"
-                        :disabled="inProgress"
+                        :disabled="inProgress || requiredInputs"
                         :error="newPageForm.errors.url"
                         @input="store.resetState()"
+                    ></p-input-text>
+                    <p-alert
+                        type="warning"
+                        v-if="requiredInputs"
+                    >
+                        OpenGraph failed, need to set it manually.
+                    </p-alert>
+                    <p-input-text
+                        label="Page icon URL"
+                        placeholder="Page icon"
+                        required
+                        block
+                        v-model="newPageForm.icon"
+                        :disabled="inProgress"
+                        :error="newPageForm.errors.icon"
+                        v-if="requiredInputs"
+                    ></p-input-text>
+                    <p-input-text
+                        label="Page title"
+                        placeholder="Page title"
+                        required
+                        block
+                        v-model="newPageForm.title"
+                        :disabled="inProgress"
+                        :error="newPageForm.errors.title"
+                        v-if="requiredInputs"
                     ></p-input-text>
                     <div v-if="graphDone && !inProgress">
                         <hr />
@@ -40,12 +66,6 @@
                             :error="newPageForm.errors.title"
                         ></p-input-text>
                     </div>
-                    <p-progress-bar
-                        striped
-                        :auto="200"
-                        v-if="inProgress"
-                        type="secondary"
-                    ></p-progress-bar>
                 </div>
             </span>
             <div class="casa-add-page__footer">
@@ -55,8 +75,8 @@
                 <p-button
                     type="secondary"
                     @click="store.openGraph()"
-                    v-if="!graphDone"
-                    :disabled="inProgress"
+                    v-if="!graphDone && !requiredInputs"
+                    :loading="inProgress"
                 >
                     scrap
                 </p-button>
@@ -88,7 +108,7 @@ import { type Tag } from "@/modules/domain/Types"
 import retroDefault from "../../../../assets/404_retro.png"
 import { usePage } from "../stores/PageStore"
 
-const { store, inProgress, graphDone, newPageForm, status } = usePage()
+const { store, inProgress, graphDone, newPageForm, status, requiredInputs } = usePage()
 
 const addPageModal = ref<HTMLElement | null>(null)
 const props = defineProps<{
