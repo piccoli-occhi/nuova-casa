@@ -17,7 +17,7 @@
                         v-model="newPageForm.url"
                         :disabled="inProgress || requiredInputs"
                         :error="newPageForm.errors.url"
-                        @input="store.resetState()"
+                        @input="store.resetState($event.target.value)"
                     ></p-input-text>
                     <p-alert
                         type="warning"
@@ -69,7 +69,7 @@
                 </div>
             </span>
             <div class="casa-add-page__footer">
-                <p-button>
+                <p-button @click="addPageModal.close()">
                     cancel
                 </p-button>
                 <p-button

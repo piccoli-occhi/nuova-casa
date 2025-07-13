@@ -80,11 +80,13 @@ export class TagStore {
         }, 750)
     }
 
-    public async resetState() {
+    public async resetState(defaultName?: string) {
         this.newTag.icon = ""
         this.newTag.color = ""
-        this.$searDone.set(false)
+        this.newTag.name = defaultName ?? ""
         this.newTag.clearErrors()
+
+        this.$searDone.set(false)
         this.$status.set("")
         this.$allColors.set([])
         this.$allColors.set([])

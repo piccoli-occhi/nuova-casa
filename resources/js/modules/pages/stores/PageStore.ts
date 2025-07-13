@@ -75,9 +75,10 @@ export class PageStore {
         }
     }
 
-    public async resetState() {
+    public async resetState(value?: string) {
         this.$newPage.title = ""
         this.$newPage.icon = ""
+        this.$newPage.url = value ?? ""
         this.$graphDone.set(false)
         this.$requiredInputs.set(false)
         this.$newPage.clearErrors()

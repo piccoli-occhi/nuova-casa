@@ -19,7 +19,7 @@
                     v-model="newTagForm.name"
                     :disabled="inProgress"
                     :error="newTagForm.errors.name"
-                    @input="tagStore.resetState()"
+                    @input="tagStore.resetState($event.target.value)"
                 ></p-input-text>
                 <div
                     v-if="searDone && !inProgress"
@@ -55,7 +55,7 @@
                 </div>
             </div>
             <div class="modal__footer">
-                <p-button>
+                <p-button @click="addPageModal.close()">
                     cancel
                 </p-button>
                 <p-button
