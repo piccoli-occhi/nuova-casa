@@ -7,10 +7,8 @@ export function useTag() {
     const status = useStore(tagStore.$status)
     const searDone = useStore(tagStore.$searDone)
     const allImages = useStore(tagStore.$allImages)
-    const allColors = useStore(tagStore.$allColors)
 
     return {
-        allColors,
         status,
         tagStore,
         newTagForm: tagStore.newTag,

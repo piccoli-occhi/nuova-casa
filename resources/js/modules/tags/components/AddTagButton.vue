@@ -21,37 +21,28 @@
                     :error="newTagForm.errors.name"
                     @input="tagStore.resetState($event.target.value)"
                 ></p-input-text>
-                <div
-                    v-if="searDone && !inProgress"
-                    class="modal__list"
-                >
-                    <p-leaf
-                        v-for="image in allImages"
-                        :key="image"
+
+                <div class="modal__list">
+                    <masonry-wall
+                        v-if="searDone && !inProgress"
+                        :items="allImages"
+                        :column-width="200"
+                        :min-columns="3"
+                        :max-columns="3"
+                        :gap="16"
                     >
-                        <img
-                            :class="{'is--selected': newTagForm.icon === image}"
-                            :src="image"
-                            @click="tagStore.setTagIcon(image, $event.target)"
-                        />
-                    </p-leaf>
-                </div>
-                <p-leaf v-if="allColors.length > 0">
-                    Colors
-                </p-leaf>
-                <div class="modal__colors">
-                    <p-leaf v-for="color in allColors">
-                        <div
-                            :style="{'background': color}"
-                            :class="{
-                                'is--selected': newTagForm.color === color,
-                                border: true
-                            }"
-                            @click="tagStore.setTagColor(color)"
-                        >
-                            {{ color }}
-                        </div>
-                    </p-leaf>
+                        <template #default="{item}">
+                            <p-leaf :key="item">
+                                <img
+                                    :class="{
+                                        'not--selected': newTagForm.icon !== item && newTagForm.icon,
+                                    }"
+                                    :src="item"
+                                    @click="tagStore.setTagIcon(item)"
+                                />
+                            </p-leaf>
+                        </template>
+                    </masonry-wall>
                 </div>
             </div>
             <div class="modal__footer">
@@ -71,7 +62,7 @@
                     type="success"
                     v-else
                     @click="tagStore.saveTag()"
-                    :disabled="!newTagForm.color || !newTagForm.icon"
+                    :disabled="!newTagForm.icon"
                 >
                     save <p-icon icon="save"></p-icon>
                 </p-button>
@@ -95,7 +86,7 @@ import { onMounted, ref, watch } from "vue"
 import { useTag } from "../composables/useTag"
 
 const addPageModal = ref<HTMLElement | null>(null)
-const { newTagForm, tagStore, inProgress, searDone, allImages, status, allColors } = useTag()
+const { newTagForm, tagStore, inProgress, searDone, allImages, status } = useTag()
 
 function openModal() {
     tagStore.resetState()
@@ -135,8 +126,8 @@ onMounted(() => {
             vertical-align: middle;
         }
 
-        .is--selected {
-            border-color: var(--success);
+        .not--selected {
+            opacity: 0.5;
         }
 
         .modal__colors {
@@ -156,16 +147,9 @@ onMounted(() => {
         }
 
         .modal__list {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
             margin-top: 10px;
-            gap: 10px;
-            height: 240px;
+            max-height: 240px;
             overflow: scroll;
-
-            img {
-                width: 100M;
-            }
         }
 
         .tag__modal {
