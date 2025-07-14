@@ -1,6 +1,4 @@
 import { useForm } from "@inertiajs/vue3"
-import { useStore } from "@nanostores/vue"
-import ColorThief from "colorthief"
 import { atom } from "nanostores"
 import { route } from "ziggy-js"
 
@@ -15,11 +13,8 @@ export class TagStore {
 
     public readonly $allImages = atom<string[]>([])
 
-    public readonly $allColors = atom<string[]>([])
-
     public readonly newTag = useForm({
         name: "",
-        color: "",
         icon: "",
     })
 
@@ -31,22 +26,8 @@ export class TagStore {
         return TagStore.instance
     }
 
-    public setTagColor(color: string) {
-        this.newTag.color = color
-    }
-
-    public setTagIcon(icon: string, img: HTMLImageElement) {
-        this.newTag.icon = icon
-        const thief = new ColorThief()
-        const colors: Array<number[]> = thief.getPalette(img, 10)
-
-        this.$allColors.set([
-            ...new Set(
-                colors.map(([r, g, b]) => {
-                    return `rgb(${r}, ${g}, ${b})`
-                }),
-            ),
-        ])
+    public setTagIcon(url: string) {
+        this.newTag.icon = url
     }
 
     public async saveTag() {
@@ -55,6 +36,7 @@ export class TagStore {
                 this.$status.set("success")
             },
             onError: (args) => {
+                console.error(`action=save_tag, status=failed, reason=${args}`)
                 this.$status.set("failed")
             },
         })
@@ -80,14 +62,13 @@ export class TagStore {
         }, 750)
     }
 
-    public async resetState() {
+    public async resetState(defaultName?: string) {
         this.newTag.icon = ""
-        this.newTag.color = ""
-        this.$searDone.set(false)
+        this.newTag.name = defaultName ?? ""
         this.newTag.clearErrors()
+
+        this.$searDone.set(false)
         this.$status.set("")
-        this.$allColors.set([])
-        this.$allColors.set([])
     }
 
     public async savePage() {

@@ -15,10 +15,49 @@
                         required
                         block
                         v-model="newPageForm.url"
-                        :disabled="inProgress"
+                        :disabled="inProgress || requiredInputs"
                         :error="newPageForm.errors.url"
-                        @input="store.resetState()"
+                        @input="store.resetState($event.target.value)"
                     ></p-input-text>
+                    <p-alert
+                        type="warning"
+                        v-if="requiredInputs"
+                    >
+                        OpenGraph failed, need to set it manually.
+                    </p-alert>
+                    <p-input-text
+                        label="Page title"
+                        placeholder="Page title"
+                        required
+                        block
+                        v-model="newPageForm.title"
+                        :disabled="inProgress"
+                        :error="newPageForm.errors.title"
+                        v-if="requiredInputs"
+                    ></p-input-text>
+                    <div class="modal__list">
+                        <masonry-wall
+                            v-if="requiredInputs"
+                            :items="allImages"
+                            :column-width="200"
+                            :min-columns="3"
+                            :max-columns="3"
+                            :gap="16"
+                        >
+                            <template #default="{item}">
+                                <p-leaf :key="item">
+                                    <img
+                                        :class="{
+                                            'not--selected': newPageForm.icon !== item && newPageForm.icon,
+                                        }"
+                                        :src="item"
+                                        @click="store.setPageIcon(item)"
+                                    />
+                                </p-leaf>
+                            </template>
+                        </masonry-wall>
+                    </div>
+
                     <div v-if="graphDone && !inProgress">
                         <hr />
                         <p-leaf>
@@ -40,23 +79,17 @@
                             :error="newPageForm.errors.title"
                         ></p-input-text>
                     </div>
-                    <p-progress-bar
-                        striped
-                        :auto="200"
-                        v-if="inProgress"
-                        type="secondary"
-                    ></p-progress-bar>
                 </div>
             </span>
             <div class="casa-add-page__footer">
-                <p-button>
+                <p-button @click="addPageModal.close()">
                     cancel
                 </p-button>
                 <p-button
                     type="secondary"
                     @click="store.openGraph()"
-                    v-if="!graphDone"
-                    :disabled="inProgress"
+                    v-if="!graphDone && !requiredInputs"
+                    :loading="inProgress"
                 >
                     scrap
                 </p-button>
@@ -74,7 +107,7 @@
             type="primary"
             @click="openModal()"
         >
-            cancel
+            add new page
         </p-button>
     </div>
 </template>
@@ -88,7 +121,7 @@ import { type Tag } from "@/modules/domain/Types"
 import retroDefault from "../../../../assets/404_retro.png"
 import { usePage } from "../stores/PageStore"
 
-const { store, inProgress, graphDone, newPageForm, status } = usePage()
+const { store, inProgress, graphDone, newPageForm, status, requiredInputs, allImages } = usePage()
 
 const addPageModal = ref<HTMLElement | null>(null)
 const props = defineProps<{
@@ -143,6 +176,16 @@ function openModal() {
 
     .casa-add-page__image {
         height: 100px;
+    }
+
+    .modal__list {
+        margin-top: 10px;
+        max-height: 240px;
+        overflow: scroll;
+    }
+
+    .not--selected {
+        opacity: 0.5;
     }
 
     .casa-add-page__footer {

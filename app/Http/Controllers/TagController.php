@@ -39,7 +39,6 @@ class TagController extends Controller
         $tag = new Tag();
         $tag->icon = $data->icon;
         $tag->name = $data->name;
-        $tag->color = $data->color;
         $tag->user_id = auth()->user()->id;
 
         $tag->save();
