@@ -38,6 +38,9 @@ Route::middleware(['auth'])
             ::get('/tags', 'index')
             ->name('tags');
         Route
+            ::delete('/api/tag/{tag}', 'destroy')
+            ->name('delete-tag');
+        Route
             ::post('/api/tags', 'store')
             ->name('create-tag');
         Route

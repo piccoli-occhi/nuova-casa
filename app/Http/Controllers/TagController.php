@@ -77,6 +77,8 @@ class TagController extends Controller
      */
     public function destroy(Tag $tag)
     {
-        //
+        Tag::destroy($tag->id);
+
+        return Redirect::to("/tags");
     }
 }
