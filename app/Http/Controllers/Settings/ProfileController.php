@@ -25,28 +25,17 @@ class ProfileController extends Controller
     }
 
     /**
-     * Update the user's profile information.
-     */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
-    {
-        $request->user()->fill($request->validated());
-
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
-        }
-
-        $request->user()->save();
-
-        return to_route('profile.edit');
-    }
-
-    /**
      * Delete the user's profile.
      */
     public function destroy(Request $request): RedirectResponse
     {
         $request->validate([
-            'password' => ['required', 'current_password'],
+            'confirmation' => ['required', function ($attribute, $value, $fail) use ($request) {
+                $expected = auth()->user()->name . '/' . auth()->user()->email;
+                if (trim($value) !== $expected) {
+                    $fail('You should enter <username/email>');
+                }
+            }],
         ]);
 
         $user = $request->user();
