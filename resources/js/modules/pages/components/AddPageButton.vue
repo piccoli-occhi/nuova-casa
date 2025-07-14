@@ -94,7 +94,7 @@
             type="primary"
             @click="openModal()"
         >
-            cancel
+            add new page
         </p-button>
     </div>
 </template>

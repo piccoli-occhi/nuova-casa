@@ -7,7 +7,7 @@
                 <p-leaf>
                     <h3>
                         {{ props.tag.name }}
-                        &nbsp;
+                        -
                         <small>
                             {{ props.tag.children.length }} page(s)
                         </small>
@@ -16,6 +16,9 @@
                 <AddPageButton
                     :tag="props.tag"
                 />
+                <p-button type="danger" dark>
+                    remove page
+                </p-button>
             </div>
             <div class="casa-tag-details__cards">
                 <PageCard
@@ -64,7 +67,7 @@ const breadcrumbs: BreadcrumbItem[] = [
     }
     .casa-tag-details__header {
         display: grid;
-        grid-template-columns: 1fr auto;
+        grid-template-columns: 1fr auto auto;
         justify-content: space-between;
         align-items: center;
         gap: 20px;
