@@ -84,7 +84,7 @@ function toggleFavorite() {
                 })
             }
         },
-        onError: (errors) => {
+        onError: () => {
             if (handler) {
                 handler.pushNotification({
                     type: "danger",

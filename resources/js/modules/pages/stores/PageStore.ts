@@ -14,6 +14,8 @@ export class PageStore {
 
     public readonly $requiredInputs = atom<boolean>(false)
 
+    public readonly $allImages = atom<string[]>([])
+
     public readonly $newPage = useForm({
         url: "",
         title: "",
@@ -34,8 +36,17 @@ export class PageStore {
     }
 
     private requiredInputs() {
-        this.$inProgress.set(false)
-        this.$requiredInputs.set(true)
+        fetch(route(`sear-xng`, { name: this.$newPage.url })).then(async (response) => {
+            const json: { images: string[] } = await response.json()
+
+            this.$allImages.set(json.images ?? [])
+            this.$inProgress.set(false)
+            this.$requiredInputs.set(true)
+        })
+    }
+
+    public setPageIcon(url: string) {
+        this.$newPage.icon = url
     }
 
     public async openGraph() {
@@ -90,7 +101,7 @@ export class PageStore {
             onSuccess: (args) => {
                 this.$status.set("success")
             },
-            onError: (args) => {
+            onError: () => {
                 this.$status.set("failed")
             },
         })
@@ -105,6 +116,7 @@ export function usePage() {
     const graphDone = useStore(store.$graphDone)
     const status = useStore(store.$status)
     const requiredInputs = useStore(store.$requiredInputs)
+    const allImages = useStore(store.$allImages)
 
     return {
         status,
@@ -113,5 +125,6 @@ export function usePage() {
         inProgress,
         graphDone,
         requiredInputs,
+        allImages,
     }
 }
