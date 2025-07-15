@@ -114,7 +114,7 @@ function toggleFavorite() {
 
         img {
             width: 100%;
-            max-height: 100%;
+            max-height: 100px;
             margin: auto;
         }
 

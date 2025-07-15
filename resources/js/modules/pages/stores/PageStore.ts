@@ -81,6 +81,8 @@ export class PageStore {
                 this.$graphDone.set(true)
             }, 750)
         } catch {
+            this.requiredInputs()
+
             this.$inProgress.set(false)
             this.$requiredInputs.set(true)
         }
