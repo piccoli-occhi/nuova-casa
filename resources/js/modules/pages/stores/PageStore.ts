@@ -16,6 +16,8 @@ export class PageStore {
 
     public readonly $allImages = atom<string[]>([])
 
+    public readonly $loadingImages = atom<boolean>(false)
+
     public readonly $newPage = useForm({
         url: "",
         title: "",
@@ -35,10 +37,13 @@ export class PageStore {
         return PageStore.instance
     }
 
-    private requiredInputs() {
-        fetch(route(`sear-xng`, { name: this.$newPage.url })).then(async (response) => {
+    public requiredInputs(value?: string) {
+        this.$loadingImages.set(true)
+
+        fetch(route(`sear-xng`, { name: value ?? this.$newPage.url })).then(async (response) => {
             const json: { images: string[] } = await response.json()
 
+            this.$loadingImages.set(false)
             this.$allImages.set(json.images ?? [])
             this.$inProgress.set(false)
             this.$requiredInputs.set(true)
@@ -119,6 +124,7 @@ export function usePage() {
     const status = useStore(store.$status)
     const requiredInputs = useStore(store.$requiredInputs)
     const allImages = useStore(store.$allImages)
+    const loadingImages = useStore(store.$loadingImages)
 
     return {
         status,
@@ -128,5 +134,6 @@ export function usePage() {
         graphDone,
         requiredInputs,
         allImages,
+        loadingImages,
     }
 }
