@@ -56,7 +56,12 @@ class PageController extends Controller
         $page->readCount += 1;
         $page->save();
 
-        return Redirect::to($page->url);
+        $url = $page->url;
+        if (!preg_match('#^https?://#i', $url)) {
+            $url = 'https://' . $url;
+        }
+
+        return Redirect::to($url);
     }
 
     public function openGraph(FormRequest $request)
