@@ -11,9 +11,12 @@
             >
             <div>
                 <div class="card__title">
-                    <Link :href="route('read-page', {id: props.page.id})">
-                    {{ props.page.title }}
-                    </Link>
+                    <a
+                        :href="route('read-page', {id: props.page.id})"
+                        target="_blank"
+                    >
+                        {{ props.page.title }}
+                    </a>
                 </div>
                 <div
                     class="card__footer for--edit"
@@ -57,7 +60,7 @@
     lang="ts"
     setup
 >
-import { Link, router, useForm } from "@inertiajs/vue3"
+import { useForm } from "@inertiajs/vue3"
 import { route } from "ziggy-js"
 import { Page } from "@/modules/domain/Types"
 import retroDefault from "../../../../assets/404_retro.png"
@@ -102,6 +105,7 @@ function toggleFavorite() {
     p-leaf {
         width: 100%;
     }
+
     .casa-page-card {
         height: 120px;
         width: 100%;
