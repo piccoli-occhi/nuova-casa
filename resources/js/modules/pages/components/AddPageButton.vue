@@ -25,19 +25,36 @@
                     >
                         OpenGraph failed, need to set it manually.
                     </p-alert>
-                    <p-input-text
-                        label="Page title"
-                        placeholder="Page title"
-                        required
-                        block
-                        v-model="newPageForm.title"
-                        :disabled="inProgress"
-                        :error="newPageForm.errors.title"
+                    <div
                         v-if="requiredInputs"
-                    ></p-input-text>
+                        class="casa-add-page__part"
+                    >
+                        <p-input-text
+                            label="Page title"
+                            placeholder="Page title"
+                            required
+                            block
+                            v-model="newPageForm.title"
+                            :disabled="inProgress"
+                            :error="newPageForm.errors.title"
+                        ></p-input-text>
+                        <p-button
+                            :disabled="loadingImages || newPageForm.title.length === 0"
+                            @click="store.requiredInputs(newPageForm.title)"
+                        >
+                            <p-icon icon="reload"></p-icon>
+                        </p-button>
+                    </div>
                     <div class="modal__list">
+                        <div class="modal__list__loading">
+                            <p-spinner
+                                large
+                                color="var(--secondary-text)"
+                                v-if="loadingImages"
+                            ></p-spinner>
+                        </div>
                         <masonry-wall
-                            v-if="requiredInputs"
+                            v-if="requiredInputs && !loadingImages"
                             :items="allImages"
                             :column-width="200"
                             :min-columns="3"
@@ -121,7 +138,7 @@ import { type Tag } from "@/modules/domain/Types"
 import retroDefault from "../../../../assets/404_retro.png"
 import { usePage } from "../stores/PageStore"
 
-const { store, inProgress, graphDone, newPageForm, status, requiredInputs, allImages } = usePage()
+const { store, inProgress, graphDone, newPageForm, status, requiredInputs, allImages, loadingImages } = usePage()
 
 const addPageModal = ref<HTMLElement | null>(null)
 const props = defineProps<{
@@ -174,6 +191,13 @@ function openModal() {
         }
     }
 
+    .casa-add-page__part {
+        display: grid;
+        grid-template-columns: 1fr 40px;
+        align-items: center;
+        gap: 10px;
+    }
+
     .casa-add-page__image {
         height: 100px;
     }
@@ -182,6 +206,10 @@ function openModal() {
         margin-top: 10px;
         max-height: 240px;
         overflow: scroll;
+    }
+
+    .modal__list__loading {
+        text-align: center;
     }
 
     .not--selected {

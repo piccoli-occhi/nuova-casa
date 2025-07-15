@@ -1,6 +1,9 @@
 <template>
-    <p-leaf dark>
-        <div class="casa-page-card border">
+    <p-card dark>
+        <div
+            slot="title"
+            class="for--title"
+        >
             <img
                 :src="props.page.icon"
                 v-if="!props.page.icon.includes('404')"
@@ -9,55 +12,54 @@
                 :src="retroDefault"
                 v-else
             >
-            <div>
-                <div class="card__title">
-                    <Link :href="route('read-page', {id: props.page.id})">
-                    {{ props.page.title }}
-                    </Link>
-                </div>
-                <div
-                    class="card__footer for--edit"
-                    v-if="edit"
+            <a
+                :href="route('read-page', {id: props.page.id})"
+                target="_blank"
+            >
+                {{ props.page.title }}
+            </a>
+        </div>
+        <div
+            slot="header"
+            v-if="!props.edit"
+        >
+            <div class="is--flex">
+                <p-badge>
+                    {{ props.page.parent.name }}
+                </p-badge>
+                <p-badge
+                    dark
+                    type="secondary"
                 >
-                    <p-tooltip
-                        bottom
-                        title="change favorite"
-                    >
-                        <p-switch
-                            round
-                            dark
-                            :checked="props.page.favorite"
-                            @change="toggleFavorite()"
-                        ></p-switch>
-                    </p-tooltip>
-                    <div>
-                        <DeletePageButton :page="props.page" />
-                    </div>
-                </div>
-                <div
-                    class="card__footer"
-                    v-else
-                >
-                    <p-badge>
-                        {{ props.page.parent.name }}
-                    </p-badge>
-                    <p-badge
-                        dark
-                        type="secondary"
-                    >
-                        {{ props.page.readCount }} vue(s)
-                    </p-badge>
-                </div>
+                    {{ props.page.readCount }} vue(s)
+                </p-badge>
             </div>
         </div>
-    </p-leaf>
+        <div
+            class="is--flex"
+            slot="footer"
+            v-if="edit"
+        >
+            <p-tooltip
+                bottom
+                title="change favorite"
+            >
+                <p-switch
+                    round
+                    dark
+                    :checked="props.page.favorite"
+                    @change="toggleFavorite()"
+                ></p-switch>
+            </p-tooltip>
+            <div>
+                <DeletePageButton :page="props.page" />
+            </div>
+        </div>
+    </p-card>
 </template>
 
-<script
-    lang="ts"
-    setup
->
-import { Link, router, useForm } from "@inertiajs/vue3"
+<script lang="ts" setup>
+import { useForm } from "@inertiajs/vue3"
 import { route } from "ziggy-js"
 import { Page } from "@/modules/domain/Types"
 import retroDefault from "../../../../assets/404_retro.png"
@@ -99,62 +101,19 @@ function toggleFavorite() {
 </script>
 
 <style scoped>
-    p-leaf {
-        width: 100%;
-    }
-    .casa-page-card {
-        height: 120px;
-        width: 100%;
-        gap: 20px;
-        display: grid;
-        grid-template-columns: 96px 1fr;
-        padding: 10px;
-        box-sizing: border-box;
-        background: #1E2023;
-
-        img {
-            width: 100%;
-            max-height: 100%;
-            margin: auto;
-        }
-
-        img+div {
-            display: grid;
-            grid-template-rows: 1fr 1fr;
-            grid-template-columns: 1fr;
-            justify-content: space-between;
-        }
-    }
-
-    .card__footer {
-        display: grid;
+    .for--title {
+        display: flex;
         align-items: center;
         gap: 20px;
-        box-sizing: border-box;
-    }
 
-    .card__footer:not(.for--edit) {
-        grid-template-columns: 1fr auto;
-        justify-content: space-between;
-    }
-
-    .card__footer.for--edit {
-        grid-template-columns: 1fr auto;
-        justify-content: space-between;
-    }
-
-    .card__title {
-        overflow: hidden;
-        text-overflow: ellipsis;
-
-        a {
-            text-decoration: none;
-            background-image: unset;
-            display: inline-block;
-            max-width: 100%;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
+        img {
+            max-height: 50px;
         }
+    }
+
+    .is--flex {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
     }
 </style>
