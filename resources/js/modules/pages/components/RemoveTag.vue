@@ -52,7 +52,7 @@ function removeTag() {
                 })
             }
         },
-        onError: (errors) => {
+        onError: () => {
             if (handler) {
                 handler.pushNotification({
                     type: "danger",
