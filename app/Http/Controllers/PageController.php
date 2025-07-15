@@ -9,8 +9,7 @@ use App\Http\Requests\UpdatePageRequest;
 use App\Models\Page;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Redirect;
-use Inertia\Inertia;
-use OpenGraph;
+use Shweshi\OpenGraph\OpenGraph;
 
 class PageController extends Controller
 {
@@ -65,6 +64,7 @@ class PageController extends Controller
         $data = $request->validate([
             'url' => ['required', 'string'],
         ]);
+        Http::timeout(5)->get($data['url']);
         $graphResult = OpenGraph::fetch($data['url']);
 
         return response()->json($graphResult);
