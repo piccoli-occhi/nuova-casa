@@ -65,10 +65,6 @@ const breadcrumbs: BreadcrumbItem[] = [
 <style scoped>
     .casa-tag-details__cards {
         margin-top: 20px;
-        /* display: grid;
-        grid-template-columns: 1fr 1fr;
-        align-items: center;
-        gap: 20px; */
     }
 
     .casa-tag-details__header {
