@@ -16,6 +16,10 @@ return new class extends Migration
             $table->timestamps();
             $table->string("title")->uniqid();
             $table->string("url")->uniqid();
+            $table
+                ->foreignId('user_id')
+                ->constrained()
+                ->onDelete('cascade');
         });
     }
 
