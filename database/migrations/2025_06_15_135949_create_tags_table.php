@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pages', function (Blueprint $table) {
+        Schema::create('tags', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
-            $table->string("url");
-            $table->string("title");
+            $table->string("name");
             $table->string("icon");
-            $table->boolean("favorite")->default(false);
-            $table->integer("readCount");
+            $table->string("color");
+            $table->timestamps();
             $table
                 ->foreignId('user_id')
                 ->constrained()
@@ -31,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pages');
+        Schema::dropIfExists('tags');
     }
 };
