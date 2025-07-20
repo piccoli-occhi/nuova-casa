@@ -2,13 +2,13 @@
     setup
     lang="ts"
 >
-import {Head, Link} from "@inertiajs/vue3"
-import {defineCustomElements} from "@amiceli/papierjs/loader"
+import { defineCustomElements } from "@amiceli/papierjs/loader"
+import { Head, Link } from "@inertiajs/vue3"
 
 defineCustomElements()
 
-function goToAuth () {
-    window.location.assign(route('auth-redirect'))
+function goToAuth() {
+    window.location.assign(route("auth-redirect"))
 }
 </script>
 

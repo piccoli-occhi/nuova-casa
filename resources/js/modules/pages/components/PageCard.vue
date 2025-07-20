@@ -38,7 +38,7 @@
                     class="card__footer"
                     v-else
                 >
-                    <p-badge :style="{'--muted': props.page.parent.color}">
+                    <p-badge>
                         {{ props.page.parent.name }}
                     </p-badge>
                     <p-badge
@@ -84,7 +84,7 @@ function toggleFavorite() {
                 })
             }
         },
-        onError: (errors) => {
+        onError: () => {
             if (handler) {
                 handler.pushNotification({
                     type: "danger",

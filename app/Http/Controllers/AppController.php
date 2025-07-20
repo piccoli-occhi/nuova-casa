@@ -6,7 +6,6 @@ use App\Models\Page;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\URL;
 use Inertia\Inertia;
 
 class AppController extends Controller
@@ -30,7 +29,7 @@ class AppController extends Controller
         $response = Http::withHeaders([
             'User-Agent' => 'Mozilla/5.0',
         ])->get("$url/search", [
-            'q' => $word,
+            'q' => "$word logo",
             'categories' => 'images',
             'format' => 'json',
         ]);
@@ -39,12 +38,10 @@ class AppController extends Controller
             function ($item) {
                 return $item['img_src'];
             },
-            array_slice($response['results'], 0, 10)
+            array_slice($response['results'], 0, 25)
         );
 
-        return collect($imageUrls)->map(function ($url) {
-            return URL::route('proxy', ['url' => $url]);
-        });
+        return $imageUrls;
     }
 
     public function searXng(FormRequest $request)

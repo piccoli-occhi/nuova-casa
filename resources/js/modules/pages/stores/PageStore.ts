@@ -12,6 +12,10 @@ export class PageStore {
 
     public readonly $status = atom<string>("")
 
+    public readonly $requiredInputs = atom<boolean>(false)
+
+    public readonly $allImages = atom<string[]>([])
+
     public readonly $newPage = useForm({
         url: "",
         title: "",
@@ -31,29 +35,63 @@ export class PageStore {
         return PageStore.instance
     }
 
+    private requiredInputs() {
+        fetch(route(`sear-xng`, { name: this.$newPage.url })).then(async (response) => {
+            const json: { images: string[] } = await response.json()
+
+            this.$allImages.set(json.images ?? [])
+            this.$inProgress.set(false)
+            this.$requiredInputs.set(true)
+        })
+    }
+
+    public setPageIcon(url: string) {
+        this.$newPage.icon = url
+    }
+
     public async openGraph() {
         const pageUrl = this.$newPage.url
 
         this.$inProgress.set(true)
-        const response = await fetch(route(`open-graph`, { url: pageUrl }))
-        const json: {
-            title: string
-            image?: string
-        } = await response.json()
 
-        this.$newPage.title = json.title ?? ""
-        this.$newPage.icon = json.image ?? "resources/assets/404_retro.png"
+        try {
+            const response = await fetch(route(`open-graph`, { url: pageUrl }))
 
-        setTimeout(() => {
+            if (response.status === 404) {
+                this.requiredInputs()
+
+                return
+            }
+
+            const json: {
+                title: string
+                image?: string
+            } = await response.json()
+
+            if (!json.title && !json.image) {
+                this.requiredInputs()
+                return
+            }
+
+            this.$newPage.title = json.title ?? ""
+            this.$newPage.icon = json.image ?? "resources/assets/404_retro.png"
+
+            setTimeout(() => {
+                this.$inProgress.set(false)
+                this.$graphDone.set(true)
+            }, 750)
+        } catch {
             this.$inProgress.set(false)
-            this.$graphDone.set(true)
-        }, 750)
+            this.$requiredInputs.set(true)
+        }
     }
 
-    public async resetState() {
+    public async resetState(value?: string) {
         this.$newPage.title = ""
         this.$newPage.icon = ""
+        this.$newPage.url = value ?? ""
         this.$graphDone.set(false)
+        this.$requiredInputs.set(false)
         this.$newPage.clearErrors()
         this.$status.set("")
     }
@@ -63,7 +101,7 @@ export class PageStore {
             onSuccess: (args) => {
                 this.$status.set("success")
             },
-            onError: (args) => {
+            onError: () => {
                 this.$status.set("failed")
             },
         })
@@ -77,6 +115,8 @@ export function usePage() {
     const inProgress = useStore(store.$inProgress)
     const graphDone = useStore(store.$graphDone)
     const status = useStore(store.$status)
+    const requiredInputs = useStore(store.$requiredInputs)
+    const allImages = useStore(store.$allImages)
 
     return {
         status,
@@ -84,5 +124,7 @@ export function usePage() {
         newPageForm: store.$newPage,
         inProgress,
         graphDone,
+        requiredInputs,
+        allImages,
     }
 }

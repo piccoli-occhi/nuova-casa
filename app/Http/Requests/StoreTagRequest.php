@@ -23,7 +23,6 @@ class StoreTagRequest extends FormRequest
     {
         return array(
             'icon' => 'required|string',
-            'color' => 'required|string',
             'name' => 'required|string',
         );
     }
