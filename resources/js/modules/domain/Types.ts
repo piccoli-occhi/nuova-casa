@@ -24,3 +24,16 @@ export type Tag = {
     color: string
     children: Array<Pick<Page, "id" | "icon" | "title">>
 }
+
+export type Newsletter = {
+    id: number
+    created_at: Date
+    updated_at: Date
+    url: string
+    name: string
+    lastLink: {
+        title: string
+        link: string
+        date: string
+    }
+}
