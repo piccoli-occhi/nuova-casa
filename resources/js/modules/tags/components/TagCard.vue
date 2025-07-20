@@ -1,29 +1,32 @@
 <template>
-    <p-leaf dark>
-        <div class="casa-tag-card border">
+    <p-card dark>
+        <div
+            slot="title"
+            class="for--title"
+        >
             <img :src="props.tag.icon" />
-            <div>
-                <div class="tag__title">
-                    {{ props.tag.name }}
-                </div>
-                <div>
-                    {{ props.tag.children.length }} page(s)
-                    <Link :href="route('tag', {id: props.tag.id})">
-                        <p-button dark type="secondary">
-                            Modifier
-                        </p-button>
-                    </Link>
-                    
-                </div>
-            </div>
+            {{ props.tag.name }}
         </div>
-    </p-leaf>
+        <div
+            class="is--flex"
+            slot="footer"
+        >
+            <p-badge>
+                {{ props.tag.children.length }} page(s)
+            </p-badge>
+            <Link :href="route('tag', {id: props.tag.id})">
+                <p-button
+                    dark
+                    type="secondary"
+                >
+                    Modifier
+                </p-button>
+            </Link>
+        </div>
+    </p-card>
 </template>
 
-<script
-    lang="ts"
-    setup
->
+<script lang="ts" setup>
 import { Link } from "@inertiajs/vue3"
 import type { Tag } from "@/modules/domain/Types"
 
@@ -31,53 +34,19 @@ const props = defineProps<{ tag: Tag }>()
 </script>
 
 <style scoped>
-    p-leaf {
-        width: 100%;
-    }
-
-    .casa-tag-card {
-        min-height: 120px;
-        width: 100%;
+    .for--title {
+        display: flex;
+        align-items: center;
         gap: 20px;
-        display: grid;
-        grid-template-columns: 96px 1fr;
-        padding: 10px;
-        box-sizing: border-box;
-        background: #1E2023;
 
         img {
-            width: 100%;
-            max-height: 100%;
-            margin: auto;
-        }
-
-        img+div {
-            display: grid;
-            grid-template-rows: 1fr 1fr;
-            grid-template-columns: 1fr;
-            justify-content: space-between;
+            max-height: 50px;
         }
     }
 
-    .tag__title {
-        overflow: hidden;
-        text-overflow: ellipsis;
-
-        a {
-            text-decoration: none;
-            background-image: unset;
-            display: inline-block;
-            max-width: 100%;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        & + div {
-            display: grid;
-            grid-template-columns: 1fr auto;
-            justify-content: space-between;
-            align-items: center;
-        }
+    .is--flex {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
     }
 </style>
