@@ -1,12 +1,29 @@
-# casa
+# nuova-casa
 
-## To check
+An opinionated tool for managing bookmarks and newsletters built with Laravel and Vue 3.
 
-- PHPStan
-- Psalm
+## Project idea
+
+Another `piccoli-occhi` team's project to help peaople with bad eye like me.
+
+Goal is a feature like "eye-responsive" ;).
+
+## Technology
+
+- Laravel 12
+- Vue 3
+- [papierjs](https://github.com/amiceli/papierjs) web components for UI based on paperCss.
+
+## Todo
+
+- [ ] onboarding feature
+- [ ] search tag / page / newsletter
+- [ ] add unit tests
+- [ ] add lint for PHP (PHPStan or Psalm)
 
 ## To remove
 
+Unused components to remove : 
 - LayoutGrid
 - Folder
 - BookOpen
@@ -15,7 +32,6 @@
 - Button
 - Input
 - Label
-
 - Dialog
 - DialogClose
 - DialogContent
@@ -24,13 +40,3 @@
 - DialogHeader
 - DialogTitle
 - DialogTrigger
-
-## links
-
-
-### newsletters
-
-- https://bytes.dev/archives
-- https://buttondown.com/jster/archive/
-- https://javascriptweekly.com/issues
-- https://www.phpweekly.com/archive.html
