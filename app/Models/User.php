@@ -50,6 +50,18 @@ class User extends Authenticatable
         ];
     }
 
+    // public function getNewsletters()
+    // {
+    //     return $this->newsletters()->map(function ($map) {
+    //         return array(
+    //             "id" => $map->id,
+    //             "title" => $map->title,
+    //             "url" => $map->url,
+    //             "lastLink" => $map->getLastLink(),
+    //         );
+    //     });
+    // }
+
     public function pages()
     {
         return $this->hasMany(Page::class);
