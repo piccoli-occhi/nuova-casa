@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AppController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -9,18 +10,47 @@ Route::get('/', function () {
     return Inertia::render('Welcome');
 })->name('home');
 
-Route
-    ::get('dashboard', [AppController::class, 'dashboard'])
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('dashboard', [
+        AppController::class,
+        'dashboard'
+    ])->name('dashboard');
+});
 
+// tags
 
-// PHPStan / Psalm
+Route::middleware(['auth', 'verified'])
+    ->controller(TagController::class)
+    ->group(function () {
+        Route
+            ::get('/tags', 'index')
+            ->name('tags');
+        Route
+            ::get('/tags/{tag}', 'show')
+            ->name('tag');
+    });
+
+// pages
+
 Route::middleware(['auth', 'verified'])
     ->controller(PageController::class)
     ->group(function () {
-        Route::get('/api/pages', 'index');
+        Route
+            ::post('/api/pages', 'store')
+            ->name('create-page');
+        Route
+            ::delete('/api/pages/{page}', 'destroy')
+            ->name('delete-page');
+        Route
+            ::put('/api/pages/{page}', 'update')
+            ->name('update-page');
+        Route
+            ::get('/api/pages/{page}/read', 'read')
+            ->name('read-page');
+        Route
+            ::get('/api/page/graph', 'openGraph')
+            ->name('open-graph');
     });
 
-require __DIR__.'/settings.php';
-require __DIR__.'/auth.php';
+require __DIR__ . '/settings.php';
+require __DIR__ . '/auth.php';
