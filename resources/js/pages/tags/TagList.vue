@@ -1,5 +1,4 @@
 <template>
-
     <Head title="tags" />
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="casa-tags__head">
