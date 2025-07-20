@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreTagRequest;
 use App\Http\Requests\UpdateTagRequest;
 use App\Models\Tag;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class TagController extends Controller
@@ -33,7 +34,17 @@ class TagController extends Controller
      */
     public function store(StoreTagRequest $request)
     {
-        //
+        $data = (object) $request->validated();
+
+        $tag = new Tag();
+        $tag->icon = $data->icon;
+        $tag->name = $data->name;
+        $tag->color = $data->color;
+        $tag->user_id = auth()->user()->id;
+
+        $tag->save();
+
+        return Redirect::to("/tags");
     }
 
     /**
