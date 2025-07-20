@@ -13,20 +13,29 @@
                         </small>
                     </h3>
                 </p-leaf>
-                <AddPageButton
-                    :tag="props.tag"
-                />
-                <p-button type="danger" dark>
+                <AddPageButton :tag="props.tag" />
+                <p-button
+                    type="danger"
+                    dark
+                >
                     remove page
                 </p-button>
             </div>
             <div class="casa-tag-details__cards">
-                <PageCard
-                    v-for="page in props.tag.children"
-                    :page="{...page, parent: {...props.tag}}"
-                    :key="page.title"
-                    edit
-                />
+                <masonry-wall
+                    :items="props.tag.children"
+                    :column-width="330"
+                    :max-columns="3"
+                    :gap="16"
+                >
+                    <template #default="{item}">
+                        <PageCard
+                            :page="{...item, parent: {...props.tag}}"
+                            :key="item.title"
+                            edit
+                        />
+                    </template>
+                </masonry-wall>
             </div>
         </div>
     </AppLayout>
@@ -60,11 +69,12 @@ const breadcrumbs: BreadcrumbItem[] = [
 <style scoped>
     .casa-tag-details__cards {
         margin-top: 20px;
-        display: grid;
+        /* display: grid;
         grid-template-columns: 1fr 1fr;
         align-items: center;
-        gap: 20px;
+        gap: 20px; */
     }
+
     .casa-tag-details__header {
         display: grid;
         grid-template-columns: 1fr auto auto;

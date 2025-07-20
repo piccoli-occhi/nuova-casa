@@ -31,9 +31,13 @@ const props = defineProps<{ tag: Tag }>()
 </script>
 
 <style scoped>
+    p-leaf {
+        width: 100%;
+    }
+
     .casa-tag-card {
-        height: 120px;
-        width: 400px;
+        min-height: 120px;
+        width: 100%;
         gap: 20px;
         display: grid;
         grid-template-columns: 96px 1fr;

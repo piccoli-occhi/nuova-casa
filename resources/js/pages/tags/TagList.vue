@@ -1,20 +1,29 @@
 <template>
+
     <Head title="tags" />
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="casa-tags__head">
             <p-leaf>
                 <h3>
-                    {{ props.tags.length }} tag(sd  )
+                    {{ props.tags.length }} tag(s)
                 </h3>
             </p-leaf>
             <AddTagButton />
         </div>
         <div class="casa-tags__list">
-            <TagCard
-                v-for="tag in props.tags"
-                :tag="tag"
-                :key="tag.name"
-            />
+            <masonry-wall
+                :items="props.tags"
+                :column-width="330"
+                :max-columns="3"
+                :gap="16"
+            >
+                <template #default="{item}">
+                    <TagCard
+                        :tag="item"
+                        :key="item.name"
+                    />
+                </template>
+            </masonry-wall>
         </div>
     </AppLayout>
 </template>
@@ -47,12 +56,6 @@ const breadcrumbs: BreadcrumbItem[] = [
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin-bottom: 10px;
-    }
-
-    .casa-tags__list {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 20px;
+        margin-bottom: 20px;
     }
 </style>
