@@ -1,5 +1,5 @@
 <template>
-    <p-breadcrumb dark>
+    <p-breadcrumb dark block>
         <p-breadcrumb-item>
             <p-icon icon="home"></p-icon>
         </p-breadcrumb-item>
@@ -23,3 +23,9 @@ defineProps<{
     breadcrumbs: BreadcrumbItemType[]
 }>()
 </script>
+
+<style scoped>
+    p-breadcrumb {
+        width: 100%;
+    }
+</style>
