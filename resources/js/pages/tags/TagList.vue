@@ -13,8 +13,7 @@
         <div class="casa-tags__list">
             <masonry-wall
                 :items="props.tags"
-                :column-width="330"
-                :max-columns="3"
+                :column-width="300"
                 :gap="16"
             >
                 <template #default="{item}">

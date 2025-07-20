@@ -1,5 +1,5 @@
 <template>
-    <p-card dark>
+    <p-card dark radius>
         <div
             slot="title"
             class="for--title"

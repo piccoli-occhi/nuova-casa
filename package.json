@@ -12,7 +12,7 @@
         "vue-tsc": "^2.2.4"
     },
     "dependencies": {
-        "@amiceli/papierjs": "0.10.0",
+        "@amiceli/papierjs": "0.11.0",
         "@biomejs/biome": "2.0.5",
         "@inertiajs/vue3": "^2.0.0",
         "@nanostores/vue": "^1.0.0",
