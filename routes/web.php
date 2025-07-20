@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AppController;
+use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
@@ -68,6 +69,19 @@ Route::middleware(['auth'])
         Route
             ::get('/api/page/graph', 'openGraph')
             ->name('open-graph');
+    });
+
+// rss
+
+Route::middleware(['auth'])
+    ->controller(NewsletterController::class)
+    ->group(function () {
+        Route
+            ::get('/newsletters', 'index')
+            ->name('rss-list');
+        Route
+            ::post('/newsletters', 'store')
+            ->name('create-rss');
     });
 
 Route::get('/auth/redirect', function () {
