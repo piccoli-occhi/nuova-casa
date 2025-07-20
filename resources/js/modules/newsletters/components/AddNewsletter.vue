@@ -22,7 +22,7 @@
                     </p-button>
                     <p-button
                         type="secondary"
-                        @click="store.saveRss()"
+                        @click="addNews()"
                         :loading="isLoading"
                     >
                         register
@@ -44,11 +44,38 @@
     lang="ts"
     setup
 >
-import { ref } from "vue"
+import { ref, watch } from "vue"
 import { useNewsletter } from "../stores/AddNewsletterStore"
 
 const newsletterModal = ref<HTMLElement | null>(null)
-const { store, newNewsletter, isLoading } = useNewsletter()
+const { store, newNewsletter, isLoading, status } = useNewsletter()
+
+function addNews () {
+    const overlay = document.querySelector("p-notification-handler")
+    store.saveRss()
+
+    const handler = watch(status, (e: string) => {
+        if (e === "failed") {
+            overlay?.pushNotification({
+                type: "danger",
+                canclose: true,
+                timeout: 4000,
+                text: "Something failed",
+            })
+        }
+        if (e === "success") {
+            overlay?.pushNotification({
+                type: "success",
+                canclose: true,
+                timeout: 4000,
+                text: "New page saved",
+            })
+
+            handler.stop()
+            newsletterModal.value.close()
+        }
+    })
+}
 </script>
 
 <style scoped>

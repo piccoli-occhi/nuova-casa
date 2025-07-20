@@ -4,12 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreNewsletterRequest;
 use App\Models\Newsletter;
-use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Vedmant\FeedReader\Facades\FeedReader;
 
 class NewsletterController extends Controller
 {
+    private function getNewsletters()
+    {
+        return Newsletter
+            ::where('user_id', auth()->user()->id)
+            ->get()
+            ->map(function ($map) {
+                return array(
+                    'title' => $map->title,
+                    'url' => $map->url,
+                    'lastLink' => $map->getLastLink(),
+                );
+            });
+    }
     /**
      * Display a listing of the resource.
      */
@@ -18,16 +30,7 @@ class NewsletterController extends Controller
         return Inertia::render('newsletter/NewsletterList', array(
             'news' => Inertia::optional(
                 function () {
-                    return Newsletter
-                        ::where('user_id', auth()->user()->id)
-                        ->get()
-                        ->map(function ($map) {
-                            return array(
-                                'title' => $map->title,
-                                'url' => $map->url,
-                                'lastLink' => $map->getLastLink(),
-                            );
-                        });
+                    return $this->getNewsletters();
                 }
             )
         ));
@@ -38,21 +41,34 @@ class NewsletterController extends Controller
      */
     public function store(StoreNewsletterRequest $request)
     {
-        $url = $request->input('url');
-        $f = FeedReader::read($url);
-        $news = new Newsletter();
-        $news->url = $url;
-        $news->title = $f->get_title();
-        $news->user_id = auth()->user()->id;
+        try {
+            $url = $request->input('url');
+            $f = FeedReader::read($url);
 
-        $news->save();
+            if ($f->error()) {
+                return back()->withErrors(['url' => $f->error()]);
+            }
 
-        return Redirect::to("/newsletters");
+            $news = new Newsletter();
+            $news->url = $url;
+            $news->title = $f->get_title();
+            $news->user_id = auth()->user()->id;
 
-        // return response()->json(array(
-        //     "title" => $f->get_title(),
-        //     "last" => $f->get_items()[0]->get_title(),
-        // ));
+            $news->save();
+
+            return Inertia::render('newsletter/NewsletterList', [
+                'news' => $this->getNewsletters(),
+            ]);
+        } catch (\Exception $e) {
+            return Inertia::render('newsletter/NewsletterList', [
+                'news' => Inertia::optional(
+                    function () {
+                        return $this->getNewsletters();
+                    }
+                ),
+                'errors' => ['url' => $e->getMessage()]
+            ]);
+        }
     }
 
     /**

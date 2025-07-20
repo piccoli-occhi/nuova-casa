@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreNewsletterRequest extends FormRequest
 {
@@ -22,7 +23,13 @@ class StoreNewsletterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'url' => 'required|string',
+            'url' => [
+                'required',
+                'string',
+                Rule::unique('newsletters')->where(function ($query) {
+                    return $query->where('user_id', auth()->user()->id);
+                }),
+            ],
         ];
     }
 }

@@ -29,6 +29,8 @@ export class AddNewsletterStore {
     }
 
     public saveRss() {
+        this.$isLoading.set(true)
+
         this.$newNewsletter.post(route("create-rss"), {
             onSuccess: (args) => {
                 this.$status.set("success")
@@ -37,6 +39,9 @@ export class AddNewsletterStore {
                 console.error(`action=save_tag, status=failed, reason=${args}`)
                 this.$status.set("failed")
             },
+            onFinish: () => {
+                this.$isLoading.set(false)
+            }
         })
     }
 }
@@ -44,9 +49,11 @@ export class AddNewsletterStore {
 export function useNewsletter() {
     const store = AddNewsletterStore.get()
     const isLoading = useStore(store.$isLoading)
+    const status = useStore(store.$status)
 
     return {
         store,
+        status,
         isLoading,
         newNewsletter: store.$newNewsletter,
     }
