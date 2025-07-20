@@ -1,0 +1,62 @@
+{
+    "$schema": "https://biomejs.dev/schemas/2.0.5/schema.json",
+    "assist": { "actions": { "source": { "organizeImports": "on" } } },
+    "files": {
+        "includes": [
+            "**/resources/js/modules/**",
+            "!**/resources/js/components/**",
+            "!**/resources/js/composables/**",
+            "!**/resources/js/layouts/**",
+            "!**/resources/js/pages/**",
+            "!**/resources/js/lib/**",
+            "!**/resources/js/types/**",
+            "!**/package.json",
+            "!**/composer.json",
+            "!**/composer.lock",
+            "!**/vendor/**",
+            "vite.config.ts"
+        ]
+    },
+    "linter": {
+        "enabled": true,
+        "rules": {
+            "recommended": true,
+            "style": {
+                "noUnusedTemplateLiteral": "off",
+                "useImportType": "off",
+                "noParameterAssign": "error",
+                "useAsConstAssertion": "error",
+                "useDefaultParameterLast": "error",
+                "useEnumInitializers": "error",
+                "useSelfClosingElements": "error",
+                "useSingleVarDeclarator": "error",
+                "useNumberNamespace": "error",
+                "noInferrableTypes": "error",
+                "noUselessElse": "error"
+            }
+        }
+    },
+    "formatter": {
+        "indentStyle": "space",
+        "indentWidth": 4,
+        "lineWidth": 140
+    },
+    "javascript": {
+        "formatter": {
+            "semicolons": "asNeeded"
+        }
+    },
+    "overrides": [
+        {
+            "includes": ["**/*.ts"],
+            "linter": {
+                "rules": {
+                    "correctness": {
+                        "noUnusedVariables": "error",
+                        "noUnusedImports": "error"
+                    }
+                }
+            }
+        }
+    ]
+}
