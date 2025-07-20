@@ -7,7 +7,7 @@
             "!**/resources/js/components/**",
             "!**/resources/js/composables/**",
             "!**/resources/js/layouts/**",
-            "!**/resources/js/pages/**",
+            "**/resources/js/pages/**",
             "!**/resources/js/lib/**",
             "!**/resources/js/types/**",
             "!**/package.json",

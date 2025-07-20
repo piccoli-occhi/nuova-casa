@@ -33,15 +33,14 @@
     lang="ts"
     setup
 >
+import { Head, router, useForm, usePage } from "@inertiajs/vue3"
 import AppLayout from "@/layouts/AppLayout.vue"
-import {Tag} from "@/modules/domain/Types"
+import { Tag } from "@/modules/domain/Types"
 import AddPageButton from "@/modules/pages/components/AddPageButton.vue"
 import PageCard from "@/modules/pages/components/PageCard.vue"
-import {BreadcrumbItem} from "@/types"
-import {Head, router} from "@inertiajs/vue3"
-import {usePage, useForm} from '@inertiajs/vue3'
+import { BreadcrumbItem } from "@/types"
 
-const props = defineProps<{tag: Tag}>()
+const props = defineProps<{ tag: Tag }>()
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
