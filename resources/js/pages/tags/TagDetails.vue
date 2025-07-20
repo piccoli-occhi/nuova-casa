@@ -14,12 +14,7 @@
                     </h3>
                 </p-leaf>
                 <AddPageButton :tag="props.tag" />
-                <p-button
-                    type="danger"
-                    dark
-                >
-                    remove page
-                </p-button>
+                <RemoveTag :tag="props.tag" />
             </div>
             <div class="casa-tag-details__cards">
                 <masonry-wall
@@ -50,6 +45,7 @@ import AppLayout from "@/layouts/AppLayout.vue"
 import { Tag } from "@/modules/domain/Types"
 import AddPageButton from "@/modules/pages/components/AddPageButton.vue"
 import PageCard from "@/modules/pages/components/PageCard.vue"
+import RemoveTag from "@/modules/pages/components/RemoveTag.vue"
 import { BreadcrumbItem } from "@/types"
 
 const props = defineProps<{ tag: Tag }>()
