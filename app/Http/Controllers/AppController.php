@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Newsletter;
 use App\Models\Page;
 use App\Models\Tag;
 use Illuminate\Foundation\Http\FormRequest;
@@ -72,6 +73,19 @@ class AppController extends Controller {
         }
     }
 
+    private function searchNewsletter(string $search) {
+        return Newsletter::where('user_id', auth()->user()->id)
+            ->where('title', 'LIKE', '%'.$search.'%')
+            ->get()
+            ->map(function ($map) {
+                return array(
+                    'title' => $map->title,
+                    'url' => $map->url,
+                    'lastLink' => $map->getLastLink(),
+                );
+            });
+    }
+
     public function search(Request $request) {
         $search = $request->query('value');
         $pages = Page::where('user_id', auth()->user()->id)
@@ -82,10 +96,12 @@ class AppController extends Controller {
             ->where('name', 'LIKE', '%'.$search.'%')
             ->orderBy('created_at', 'asc')
             ->get();
+        $newsletters = $this->searchNewsletter($search);
 
         return Inertia::render('Search', array(
             'pages' => $pages,
             'tags' => $tags,
+            'newsletters' => $newsletters,
         ));
     }
 }
