@@ -14,6 +14,10 @@ Goal is a feature like "eye-responsive" ;).
 - Vue 3
 - [papierjs](https://github.com/amiceli/papierjs) web components for UI based on paperCss.
 
+## Run project
+
+Easy with just: `just init`
+
 ## Todo
 
 - onboarding feature

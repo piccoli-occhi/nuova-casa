@@ -23,6 +23,13 @@ pint_fix file="":
 vite:
   ./vendor/bin/sail npm run dev
 
+# install deps, seed and run project with sail
+init:
+    ./vendor/bin/sail composer install
+    ./vendor/bin/sail npm install
+    ./vendor/bin/sail artisan db:seed
+    just run
+
 install dep="":
   ./vendor/bin/sail npm install {{dep}}
 
