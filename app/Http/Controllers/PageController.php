@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Http;
-use Illuminate\Http\Request;
 use App\Http\Requests\StorePageRequest;
 use App\Http\Requests\UpdatePageRequest;
 use App\Models\Page;
@@ -18,16 +17,19 @@ class PageController extends Controller
         $data = (object) $request->validated();
 
         $tagId = $data->tag_id;
-        $oage = new Page();
-        $oage->favorite = false;
-        $oage->icon = $data->icon;
-        $oage->title = $data->title;
-        $oage->url = $data->url;
-        $oage->readCount = 0;
-        $oage->tag_id = $tagId;
-        $oage->user_id = auth()->user()->id;
+        $page = new Page();
+        $page->favorite = false;
+        $page->icon = $data->icon;
+        $page->title = $data->title;
+        $page->url = $data->url;
+        $page->tag_id = $tagId;
+        $page->user_id = auth()->user()->id;
 
-        $oage->save();
+        if (!preg_match('#^https?://#i', $page->url)) {
+            $page->url = 'https://' . $page->url;
+        }
+
+        $page->save();
 
         return Redirect::to("/tags/$tagId");
     }
@@ -49,19 +51,6 @@ class PageController extends Controller
         Page::destroy($page->id);
 
         return Redirect::to("/tags/$parentId");
-    }
-
-    public function read(Page $page)
-    {
-        $page->readCount += 1;
-        $page->save();
-
-        $url = $page->url;
-        if (!preg_match('#^https?://#i', $url)) {
-            $url = 'https://' . $url;
-        }
-
-        return Redirect::to($url);
     }
 
     public function openGraph(FormRequest $request)

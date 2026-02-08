@@ -64,9 +64,6 @@ Route::middleware(['auth'])
             ::put('/api/pages/{page}', 'update')
             ->name('update-page');
         Route
-            ::get('/api/pages/{page}/read', 'read')
-            ->name('read-page');
-        Route
             ::get('/api/page/graph', 'openGraph')
             ->name('open-graph');
     });

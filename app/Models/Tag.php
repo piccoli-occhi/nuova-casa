@@ -15,7 +15,6 @@ class Tag extends Model
         return $this->pages->map(function ($map) {
             return array(
                 "id" => $map->id,
-                "readCount" => $map->readCount,
                 "title" => $map->title,
                 "icon" => $map->icon,
                 "favorite" => $map->favorite,

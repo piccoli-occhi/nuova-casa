@@ -13,7 +13,7 @@
                 v-else
             >
             <a
-                :href="route('read-page', {id: props.page.id})"
+                :href="openPage()"
                 target="_blank"
             >
                 {{ props.page.title }}
@@ -26,12 +26,6 @@
             <div class="is--flex">
                 <p-badge>
                     {{ props.page.parent.name }}
-                </p-badge>
-                <p-badge
-                    dark
-                    type="secondary"
-                >
-                    {{ props.page.readCount }} vue(s)
                 </p-badge>
             </div>
         </div>
@@ -66,6 +60,10 @@ import retroDefault from "../../../../assets/404_retro.png"
 import DeletePageButton from "./DeletePageButton.vue"
 
 const props = defineProps<{ page: Page; edit?: boolean }>()
+
+function openPage () {
+    return props.page.url.startsWith('https://') ? props.page.url : `https://${props.page.url}`
+}
 
 function toggleFavorite() {
     const handler = document.querySelector("p-notification-handler")
