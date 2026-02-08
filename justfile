@@ -12,6 +12,14 @@ run_front:
 biome:
     ./vendor/bin/sail npm run lint
 
+lint:
+    just biome
+    just pint_fix
+
+# Test and fix files with Pint
+pint_fix file="":
+    ./vendor/bin/pint {{file}}
+
 vite:
   ./vendor/bin/sail npm run dev
 
