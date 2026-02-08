@@ -11,24 +11,21 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class AuthenticatedSessionController extends Controller
-{
+class AuthenticatedSessionController extends Controller {
     /**
      * Show the login page.
      */
-    public function create(Request $request): Response
-    {
-        return Inertia::render('auth/Login', [
+    public function create(Request $request): Response {
+        return Inertia::render('auth/Login', array(
             'canResetPassword' => Route::has('password.request'),
             'status' => $request->session()->get('status'),
-        ]);
+        ));
     }
 
     /**
      * Handle an incoming authentication request.
      */
-    public function store(LoginRequest $request): RedirectResponse
-    {
+    public function store(LoginRequest $request): RedirectResponse {
         $request->authenticate();
 
         $request->session()->regenerate();
@@ -39,8 +36,7 @@ class AuthenticatedSessionController extends Controller
     /**
      * Destroy an authenticated session.
      */
-    public function destroy(Request $request): RedirectResponse
-    {
+    public function destroy(Request $request): RedirectResponse {
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();

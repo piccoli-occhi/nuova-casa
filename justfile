@@ -12,13 +12,28 @@ run_front:
 biome:
     ./vendor/bin/sail npm run lint
 
+lint:
+    just biome
+    just pint_fix
+
+# Test and fix files with Pint
+pint_fix file="":
+    ./vendor/bin/pint {{file}}
+
 vite:
   ./vendor/bin/sail npm run dev
+
+# install deps, seed and run project with sail
+init:
+    ./vendor/bin/sail composer install
+    ./vendor/bin/sail npm install
+    ./vendor/bin/sail artisan db:seed
+    just run
 
 install dep="":
   ./vendor/bin/sail npm install {{dep}}
 
-artisan cmd:
+artisan *cmd:
   ./vendor/bin/sail artisan {{cmd}}
 
 go_adminer:

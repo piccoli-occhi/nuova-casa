@@ -9,9 +9,8 @@ return new class extends Migration {
      * Run the migrations.
      */
     public function up(): void {
-        Schema::table('newsletters', function (Blueprint $table) {
-            $table->unique('title');
-            $table->unique('url');
+        Schema::table('pages', function (Blueprint $table) {
+            $table->dropColumn('readCount');
         });
     }
 
@@ -19,6 +18,8 @@ return new class extends Migration {
      * Reverse the migrations.
      */
     public function down(): void {
-        //
+        Schema::table('pages', function (Blueprint $table) {
+            // no need to re-add readCount column
+        });
     }
 };

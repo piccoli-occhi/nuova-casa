@@ -1,6 +1,18 @@
 <template>
     <Head title="Dashboard" />
     <AppLayout :breadcrumbs="breadcrumbs">
+        <p-alert
+            v-if="props.pages.length === 0"
+        >
+            <div class="dashboard__empty">
+                <span>
+                    Your tag list is empty
+                </span>
+                <AddTagButton :light="true">
+                    Create new
+                </AddTagButton>
+            </div>
+        </p-alert>
         <masonry-wall
             :items="props.pages"
             :column-width="330"
@@ -19,10 +31,10 @@
 
 <script setup lang="ts">
 import { Head } from "@inertiajs/vue3"
-import { onMounted } from "vue"
 import AppLayout from "@/layouts/AppLayout.vue"
 import { Page } from "@/modules/domain/Types"
 import PageCard from "@/modules/pages/components/PageCard.vue"
+import AddTagButton from "@/modules/tags/components/AddTagButton.vue"
 import { type BreadcrumbItem } from "@/types"
 
 const props = defineProps<{
@@ -34,6 +46,17 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: "/dashboard",
     },
 ]
-
-onMounted(() => {})
 </script>
+
+<style scoped>
+    p-alert {
+        max-width: 500px;
+    }
+
+    .dashboard__empty {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap : 15px;
+        align-items: center;
+    }
+</style>

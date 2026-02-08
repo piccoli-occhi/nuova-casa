@@ -7,12 +7,9 @@ use App\Models\Newsletter;
 use Inertia\Inertia;
 use Vedmant\FeedReader\Facades\FeedReader;
 
-class NewsletterController extends Controller
-{
-    private function getNewsletters()
-    {
-        return Newsletter
-            ::where('user_id', auth()->user()->id)
+class NewsletterController extends Controller {
+    private function getNewsletters() {
+        return Newsletter::where('user_id', auth()->user()->id)
             ->get()
             ->map(function ($map) {
                 return array(
@@ -22,31 +19,30 @@ class NewsletterController extends Controller
                 );
             });
     }
+
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
+    public function index() {
         return Inertia::render('newsletter/NewsletterList', array(
             'news' => Inertia::optional(
                 function () {
                     return $this->getNewsletters();
                 }
-            )
+            ),
         ));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreNewsletterRequest $request)
-    {
+    public function store(StoreNewsletterRequest $request) {
         try {
             $url = $request->input('url');
             $f = FeedReader::read($url);
 
             if ($f->error()) {
-                return back()->withErrors(['url' => $f->error()]);
+                return back()->withErrors(array('url' => $f->error()));
             }
 
             $news = new Newsletter();
@@ -56,26 +52,25 @@ class NewsletterController extends Controller
 
             $news->save();
 
-            return Inertia::render('newsletter/NewsletterList', [
+            return Inertia::render('newsletter/NewsletterList', array(
                 'news' => $this->getNewsletters(),
-            ]);
+            ));
         } catch (\Exception $e) {
-            return Inertia::render('newsletter/NewsletterList', [
+            return Inertia::render('newsletter/NewsletterList', array(
                 'news' => Inertia::optional(
                     function () {
                         return $this->getNewsletters();
                     }
                 ),
-                'errors' => ['url' => $e->getMessage()]
-            ]);
+                'errors' => array('url' => $e->getMessage()),
+            ));
         }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Newsletter $newsletter)
-    {
+    public function destroy(Newsletter $newsletter) {
         //
     }
 }

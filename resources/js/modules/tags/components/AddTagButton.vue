@@ -70,10 +70,12 @@
         </p-modal>
         <p-button
             type="secondary"
-            dark
+            :dark="props.light ? undefined : true"
             @click="openModal()"
         >
-            Add tag
+            <slot>
+                Add tag
+            </slot>
         </p-button>
     </div>
 </template>
@@ -87,6 +89,8 @@ import { useTag } from "../composables/useTag"
 
 const addPageModal = ref<HTMLElement | null>(null)
 const { newTagForm, tagStore, inProgress, searDone, allImages, status } = useTag()
+
+const props = defineProps<{ light?: boolean }>()
 
 function openModal() {
     tagStore.resetState()

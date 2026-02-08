@@ -6,7 +6,6 @@ export type Page = {
     title: string
     icon: string
     favorite: boolean
-    readCount: number
     parent: {
         id: number
         name: string
