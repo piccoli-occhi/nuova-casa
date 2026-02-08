@@ -14,17 +14,15 @@ use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class NewPasswordController extends Controller
-{
+class NewPasswordController extends Controller {
     /**
      * Show the password reset page.
      */
-    public function create(Request $request): Response
-    {
-        return Inertia::render('auth/ResetPassword', [
+    public function create(Request $request): Response {
+        return Inertia::render('auth/ResetPassword', array(
             'email' => $request->email,
             'token' => $request->route('token'),
-        ]);
+        ));
     }
 
     /**
@@ -32,13 +30,12 @@ class NewPasswordController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request): RedirectResponse
-    {
-        $request->validate([
+    public function store(Request $request): RedirectResponse {
+        $request->validate(array(
             'token' => 'required',
             'email' => 'required|email',
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
+            'password' => array('required', 'confirmed', Rules\Password::defaults()),
+        ));
 
         // Here we will attempt to reset the user's password. If it is successful we
         // will update the password on an actual user model and persist it to the
@@ -46,10 +43,10 @@ class NewPasswordController extends Controller
         $status = Password::reset(
             $request->only('email', 'password', 'password_confirmation', 'token'),
             function ($user) use ($request) {
-                $user->forceFill([
+                $user->forceFill(array(
                     'password' => Hash::make($request->password),
                     'remember_token' => Str::random(60),
-                ])->save();
+                ))->save();
 
                 event(new PasswordReset($user));
             }
@@ -62,8 +59,8 @@ class NewPasswordController extends Controller
             return to_route('login')->with('status', __($status));
         }
 
-        throw ValidationException::withMessages([
-            'email' => [__($status)],
-        ]);
+        throw ValidationException::withMessages(array(
+            'email' => array(__($status)),
+        ));
     }
 }

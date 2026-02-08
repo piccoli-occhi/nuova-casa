@@ -50,7 +50,7 @@ import { useNewsletter } from "../stores/AddNewsletterStore"
 const newsletterModal = ref<HTMLElement | null>(null)
 const { store, newNewsletter, isLoading, status } = useNewsletter()
 
-function addNews () {
+function addNews() {
     const overlay = document.querySelector("p-notification-handler")
     store.saveRss()
 

@@ -4,16 +4,16 @@
     "files": {
         "includes": [
             "**/resources/js/modules/**",
-            "!**/resources/js/components/**",
-            "!**/resources/js/composables/**",
-            "!**/resources/js/layouts/**",
+            "!**/resources/js/components",
+            "!**/resources/js/composables",
+            "!**/resources/js/layouts",
             "**/resources/js/pages/**",
-            "!**/resources/js/lib/**",
-            "!**/resources/js/types/**",
+            "!**/resources/js/lib",
+            "!**/resources/js/types",
             "!**/package.json",
             "!**/composer.json",
             "!**/composer.lock",
-            "!**/vendor/**",
+            "!**/vendor",
             "vite.config.ts"
         ]
     },

@@ -61,8 +61,8 @@ import DeletePageButton from "./DeletePageButton.vue"
 
 const props = defineProps<{ page: Page; edit?: boolean }>()
 
-function openPage () {
-    return props.page.url.startsWith('https://') ? props.page.url : `https://${props.page.url}`
+function openPage() {
+    return props.page.url.startsWith("https://") ? props.page.url : `https://${props.page.url}`
 }
 
 function toggleFavorite() {

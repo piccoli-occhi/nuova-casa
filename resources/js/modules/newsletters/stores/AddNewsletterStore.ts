@@ -41,7 +41,7 @@ export class AddNewsletterStore {
             },
             onFinish: () => {
                 this.$isLoading.set(false)
-            }
+            },
         })
     }
 }

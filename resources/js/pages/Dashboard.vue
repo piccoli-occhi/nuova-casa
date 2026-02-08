@@ -34,8 +34,8 @@ import { Head } from "@inertiajs/vue3"
 import AppLayout from "@/layouts/AppLayout.vue"
 import { Page } from "@/modules/domain/Types"
 import PageCard from "@/modules/pages/components/PageCard.vue"
-import { type BreadcrumbItem } from "@/types"
 import AddTagButton from "@/modules/tags/components/AddTagButton.vue"
+import { type BreadcrumbItem } from "@/types"
 
 const props = defineProps<{
     pages: Page[]

@@ -90,7 +90,7 @@ import { useTag } from "../composables/useTag"
 const addPageModal = ref<HTMLElement | null>(null)
 const { newTagForm, tagStore, inProgress, searDone, allImages, status } = useTag()
 
-const props = defineProps < { light?: boolean}>()
+const props = defineProps<{ light?: boolean }>()
 
 function openModal() {
     tagStore.resetState()
