@@ -18,7 +18,7 @@ vite:
 install dep="":
   ./vendor/bin/sail npm install {{dep}}
 
-artisan cmd:
+artisan *cmd:
   ./vendor/bin/sail artisan {{cmd}}
 
 go_adminer:
