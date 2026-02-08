@@ -16,10 +16,9 @@ Goal is a feature like "eye-responsive" ;).
 
 ## Todo
 
-- [ ] onboarding feature
-- [ ] search tag / page / newsletter
-- [ ] add unit tests
-- [ ] add lint for PHP (PHPStan or Psalm)
+- onboarding feature
+- search tag / page / newsletter
+- add unit tests
 
 ## To remove
 
