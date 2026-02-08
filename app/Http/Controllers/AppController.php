@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Page;
+use App\Models\Tag;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -69,5 +70,22 @@ class AppController extends Controller {
         } catch (\Exception $e) {
             abort(500, "Failed to fetch image : $e");
         }
+    }
+
+    public function search(Request $request) {
+        $search = $request->query('value');
+        $pages = Page::where('user_id', auth()->user()->id)
+            ->where('title', 'LIKE', '%'.$search.'%')
+            ->orderBy('created_at', 'asc')
+            ->get();
+        $tags = Tag::where('user_id', auth()->user()->id)
+            ->where('name', 'LIKE', '%'.$search.'%')
+            ->orderBy('created_at', 'asc')
+            ->get();
+
+        return Inertia::render('Search', array(
+            'pages' => $pages,
+            'tags' => $tags,
+        ));
     }
 }

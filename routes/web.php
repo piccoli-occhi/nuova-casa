@@ -25,6 +25,8 @@ Route::middleware(array('auth'))
             ->name('sear-xng');
         Route::get('proxy', 'proxy')
             ->name('proxy');
+        Route::get('/search', 'search')
+            ->name('search');
     });
 
 // tags

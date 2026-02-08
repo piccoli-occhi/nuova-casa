@@ -15,6 +15,7 @@ class Tag extends Model {
                 'id' => $map->id,
                 'title' => $map->title,
                 'icon' => $map->icon,
+                'url' => $map->url,
                 'favorite' => $map->favorite,
             );
         });
