@@ -6,9 +6,11 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\TagController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Socialite\Facades\Socialite;
+use Laravel\Socialite\Two\InvalidStateException;
 
 Route::get('/', function () {
     return Inertia::render('Welcome');
@@ -76,8 +78,26 @@ Route::get('/auth/redirect', function () {
         ->redirect();
 })->name('auth-redirect');
 
-Route::get('/auth/callback', function () {
-    $githubUser = Socialite::driver('github')->user();
+Route::get('/auth/callback', function (\Illuminate\Http\Request $request) {
+    try {
+        $githubUser = Socialite::driver('github')->user();
+    } catch (InvalidStateException $e) {
+        Log::warning('Socialite InvalidStateException', array(
+            'session_state' => $request->session()->get('state'),
+            'request_state' => $request->input('state'),
+            'has_session_cookie' => $request->hasCookie(config('session.cookie')),
+            'session_id' => $request->session()->getId(),
+            'url' => $request->fullUrl(),
+            'scheme' => $request->getScheme(),
+            'host' => $request->getHost(),
+            'forwarded_proto' => $request->headers->get('x-forwarded-proto'),
+            'forwarded_host' => $request->headers->get('x-forwarded-host'),
+            'referer' => $request->headers->get('referer'),
+            'user_agent' => $request->userAgent(),
+        ));
+
+        return redirect()->route('auth-redirect');
+    }
 
     $user = User::updateOrCreate(array(
         'email' => $githubUser->email,
