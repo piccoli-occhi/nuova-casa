@@ -96,7 +96,7 @@ Route::get('/auth/callback', function (\Illuminate\Http\Request $request) {
             'user_agent' => $request->userAgent(),
         ));
 
-        return redirect()->route('auth-redirect');
+        abort(419, 'Session expirée pendant l\'authentification GitHub. Merci de réessayer.');
     }
 
     $user = User::updateOrCreate(array(
