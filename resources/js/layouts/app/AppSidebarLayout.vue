@@ -1,19 +1,37 @@
 <template>
-    <AppShell variant="sidebar">
-        <AppSidebar />
-        <AppContent variant="sidebar">
+    <div class="app-sidebar-layout">
+        <p-sidebar
+            title="Nuova Casa"
+            logo="https://raw.githubusercontent.com/amiceli/papierjs/refs/heads/main/src/assets/papierjs.webp"
+            :user.prop="sidebarUser"
+        >
+            <p-sidebar-item
+                v-for="item in mainNavItems"
+                :key="item.href"
+                :icon="item.icon"
+                :url="item.href"
+                :active="item.href === page.url"
+            >
+                {{ item.title }}
+            </p-sidebar-item>
+        </p-sidebar>
+        <main class="app-sidebar-layout__content">
             <AppSidebarHeader :breadcrumbs="breadcrumbs" />
             <slot />
-        </AppContent>
-    </AppShell>
+        </main>
+    </div>
 </template>
 
 <script setup lang="ts">
-import AppContent from "@/components/AppContent.vue"
-import AppShell from "@/components/AppShell.vue"
-import AppSidebar from "@/components/AppSidebar.vue"
 import AppSidebarHeader from "@/components/AppSidebarHeader.vue"
-import type { BreadcrumbItemType } from "@/types"
+import type { BreadcrumbItemType, User } from "@/types"
+import { usePage } from "@inertiajs/vue3"
+
+interface NavItem {
+    title: string
+    href: string
+    icon: string
+}
 
 interface Props {
     breadcrumbs?: BreadcrumbItemType[]
@@ -22,4 +40,40 @@ interface Props {
 withDefaults(defineProps<Props>(), {
     breadcrumbs: () => [],
 })
+
+const page = usePage()
+const authUser = page.props.auth.user as User
+
+const sidebarUser = {
+    name: authUser.name,
+    email: authUser.email,
+    photo: authUser.avatar ?? "",
+}
+
+const mainNavItems: NavItem[] = [
+    { title: "Dashboard", href: "/dashboard", icon: "home" },
+    { title: "Tags", href: "/tags", icon: "bookmark" },
+    { title: "Newsletters", href: "/newsletters", icon: "mail" },
+]
 </script>
+
+<style scoped>
+.app-sidebar-layout {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+}
+
+.app-sidebar-layout > p-sidebar {
+    height: 100vh;
+    align-self: stretch;
+}
+
+.app-sidebar-layout__content {
+    height: 100vh;
+    overflow-y: auto;
+    padding: 20px;
+}
+</style>

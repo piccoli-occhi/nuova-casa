@@ -1,7 +1,7 @@
 <template>
-    <p-breadcrumb dark block>
+    <p-breadcrumb block>
         <p-breadcrumb-item>
-            <p-icon icon="home"></p-icon>
+            <p-icon color="black" icon="home"></p-icon>
         </p-breadcrumb-item>
         <p-breadcrumb-item
             v-for="(item, index) in breadcrumbs"
