@@ -15,5 +15,7 @@
         "**/node_modules/**": true,
         "**/storage/framework/**": true,
         "**/storage/logs/**": true
-    }
+    },
+    "vue.server.hybridMode": true,
+    "typescript.tsdk": "node_modules/typescript/lib"
 }
