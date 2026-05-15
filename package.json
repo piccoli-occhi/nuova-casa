@@ -5,6 +5,7 @@
         "build": "vite build",
         "build:ssr": "vite build && vite build --ssr",
         "dev": "vite --force",
+        "format": "biome check",
         "lint": "biome check --write"
     },
     "devDependencies": {
