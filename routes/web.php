@@ -5,6 +5,7 @@ use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\TagController;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
@@ -78,7 +79,7 @@ Route::get('/auth/redirect', function () {
         ->redirect();
 })->name('auth-redirect');
 
-Route::get('/auth/callback', function (\Illuminate\Http\Request $request) {
+Route::get('/auth/callback', function (Request $request) {
     try {
         $githubUser = Socialite::driver('github')->user();
     } catch (InvalidStateException $e) {
