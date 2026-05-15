@@ -10,7 +10,7 @@ import AppLayout from "@/layouts/app/AppSidebarLayout.vue"
 import type { BreadcrumbItemType } from "@/types"
 import { defineCustomElements } from "@amiceli/papierjs/loader"
 
-defineCustomElements()
+defineCustomElements(window)
 
 interface Props {
     breadcrumbs?: BreadcrumbItemType[]
