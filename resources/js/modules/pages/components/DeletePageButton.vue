@@ -27,8 +27,7 @@
     >
         <p-icon 
             size="20" 
-            icon="trash"
-            color="white"
+            icon="delete"
         ></p-icon>
     </p-button>
 </template>

@@ -2,7 +2,6 @@
     <div>
         <p-modal
             ref="addPageModal"
-            dark
         >
             <span slot="title">
                 {{ t('pages.addFor', { tag: props.tag.name }) }}
@@ -120,8 +119,7 @@
             </div>
         </p-modal>
         <p-button
-            dark
-            type="primary"
+            type="secondary"
             @click="openModal()"
         >
             {{ t('pages.addNew') }}

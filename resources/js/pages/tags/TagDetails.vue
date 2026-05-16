@@ -19,9 +19,8 @@
             <div class="casa-tag-details__cards">
                 <masonry-wall
                     :items="props.tag.children"
-                    :column-width="330"
-                    :max-columns="3"
-                    :gap="16"
+                    :column-width="200"
+                    :gap="20"
                 >
                     <template #default="{item}">
                         <PageCard

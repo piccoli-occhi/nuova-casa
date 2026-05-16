@@ -1,17 +1,12 @@
 <template>
-    <p-card radius>
+    <p-card
+        :image="props.page.icon.includes('404') ? retroDefault : props.page.icon"
+        radius
+    >
         <div
             slot="title"
             class="for--title"
         >
-            <img
-                :src="props.page.icon"
-                v-if="!props.page.icon.includes('404')"
-            />
-            <img
-                :src="retroDefault"
-                v-else
-            >
             <a
                 :href="openPage()"
                 target="_blank"
@@ -20,7 +15,7 @@
             </a>
         </div>
         <div
-            slot="header"
+            slot="footer"
             v-if="!props.edit"
         >
             <div class="is--flex">

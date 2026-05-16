@@ -1,7 +1,6 @@
 <template>
     <p-button
         type="danger"
-        dark
         @click="deleteTagModal.open()"
     >
         {{ t('tags.remove') }}

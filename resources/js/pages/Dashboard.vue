@@ -15,9 +15,8 @@
         </p-alert>
         <masonry-wall
             :items="props.pages"
-            :column-width="330"
-            :max-columns="3"
-            :gap="16"
+            :column-width="200"
+            :gap="40"
         >
             <template #default="{item}">
                 <PageCard
