@@ -2,17 +2,17 @@
     <Head title="tags" />
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="casa-tags__head">
-            <p-leaf>
+            <!-- <p-leaf>
                 <h3>
                     {{ props.tags.length }} tag(s)
                 </h3>
-            </p-leaf>
+            </p-leaf> -->
             <AddTagButton />
         </div>
         <div class="casa-tags__list">
             <masonry-wall
                 :items="props.tags"
-                :column-width="300"
+                :column-width="200"
                 :gap="16"
             >
                 <template #default="{item}">
@@ -51,9 +51,6 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 <style scoped>
     .casa-tags__head {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 20px;
+        margin-bottom: 30px;
     }
 </style>

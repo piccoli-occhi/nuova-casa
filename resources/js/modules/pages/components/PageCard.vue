@@ -40,7 +40,6 @@
             >
                 <p-switch
                     round
-                    dark
                     :checked="props.page.favorite"
                     @change="toggleFavorite()"
                 ></p-switch>

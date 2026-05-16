@@ -1,22 +1,22 @@
 <template>
-    <p-card radius>
+    <p-card :image="props.tag.icon">
         <div
             slot="title"
             class="for--title"
         >
-            <img :src="props.tag.icon" />
             {{ props.tag.name }}
+        </div>
+        <div slot="text">
+            <p-badge>
+                {{ props.tag.children.length }} page(s)
+            </p-badge>
         </div>
         <div
             class="is--flex"
             slot="footer"
         >
-            <p-badge>
-                {{ props.tag.children.length }} page(s)
-            </p-badge>
             <Link :href="route('tag', {id: props.tag.id})">
                 <p-button
-                    dark
                     type="secondary"
                 >
                     Modifier

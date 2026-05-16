@@ -2,7 +2,6 @@
     <div class="casa-add-tag">
         <p-modal
             ref="addPageModal"
-            dark
         >
             <span slot="title">
                 Add tag
@@ -73,9 +72,8 @@
             :dark="props.light ? undefined : true"
             @click="openModal()"
         >
-            <slot>
-                Add tag
-            </slot>
+            <p-icon icon="plus"></p-icon>
+            Add tag
         </p-button>
     </div>
 </template>
