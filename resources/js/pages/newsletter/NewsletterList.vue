@@ -8,7 +8,6 @@
                     <p-spinner
                         color="var(--secondary-text)"
                         large
-                        dark
                     ></p-spinner>
                 </div>
             </template>
