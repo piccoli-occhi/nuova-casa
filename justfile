@@ -49,3 +49,7 @@ generate:
 # Seed DB
 seed:
     ./vendor/bin/sail artisan db:seed
+
+# Build front
+build:
+    ./vendor/bin/sail npm run build
