@@ -1,8 +1,5 @@
 <template>
-    <p-modal
-        ref="editModal"
-        dark
-    >
+    <p-modal ref="editModal">
         <span slot="title">
             <div class="for__title">{{ props.page.title }}</div>
         </span>
@@ -27,7 +24,6 @@
     <p-button
         @click="editModal.open()"
         type="danger"
-        dark
     >
         <p-icon 
             size="20" 
