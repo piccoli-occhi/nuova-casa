@@ -14,7 +14,7 @@
     },
     "dependencies": {
         "@amiceli/papierjs": "0.16.0",
-        "@biomejs/biome": "2.3.14",
+        "@biomejs/biome": "2.4.15",
         "@inertiajs/vue3": "^2.3.13",
         "@nanostores/vue": "^1.0.0",
         "@tailwindcss/vite": "^4.1.1",
