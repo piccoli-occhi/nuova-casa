@@ -36,7 +36,7 @@
         >
             <p-tooltip
                 bottom
-                title="change favorite"
+                :title="t('pages.changeFavorite')"
             >
                 <p-switch
                     round
@@ -53,12 +53,14 @@
 
 <script lang="ts" setup>
 import { useForm } from "@inertiajs/vue3"
+import { useI18n } from "vue-i18n"
 import { route } from "ziggy-js"
 import { Page } from "@/modules/domain/Types"
 import retroDefault from "../../../../assets/404_retro.png"
 import DeletePageButton from "./DeletePageButton.vue"
 
 const props = defineProps<{ page: Page; edit?: boolean }>()
+const { t } = useI18n()
 
 function openPage() {
     return props.page.url.startsWith("https://") ? props.page.url : `https://${props.page.url}`

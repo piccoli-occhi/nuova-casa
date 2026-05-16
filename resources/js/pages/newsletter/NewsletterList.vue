@@ -1,6 +1,6 @@
 <template>
 
-    <Head title="tags" />
+    <Head :title="t('newsletters.title')" />
     <AppLayout :breadcrumbs="breadcrumbs">
         <WhenVisible data="news">
             <template #fallback>
@@ -15,7 +15,7 @@
             <div class="casa-news__head">
                 <p-leaf>
                     <h3>
-                        {{ props.news.length }} newsletter(s)
+                        {{ t('newsletters.count', { count: props.news.length }) }}
                     </h3>
                 </p-leaf>
                 <AddNewsletter />
@@ -46,6 +46,7 @@
     lang="ts"
 >
 import { Head, WhenVisible } from "@inertiajs/vue3"
+import { useI18n } from "vue-i18n"
 import AppLayout from "@/layouts/AppLayout.vue"
 import { Newsletter } from "@/modules/domain/Types"
 import AddNewsletter from "@/modules/newsletters/components/AddNewsletter.vue"
@@ -55,6 +56,8 @@ import { type BreadcrumbItem } from "@/types"
 const props = defineProps<{
     news?: Newsletter[]
 }>()
+
+const { t } = useI18n()
 
 const breadcrumbs: BreadcrumbItem[] = [
     {

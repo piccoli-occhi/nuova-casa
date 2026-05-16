@@ -1,0 +1,68 @@
+{
+    "common": {
+        "edit": "Edit",
+        "save": "Save",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "yes": "Yes",
+        "no": "No",
+        "areYouSure": "Are you sure?",
+        "createNew": "Create new",
+        "next": "Next"
+    },
+    "nav": {
+        "dashboard": "Dashboard",
+        "tags": "Tags",
+        "newsletters": "Newsletters",
+        "settings": "Settings",
+        "profile": "Profile",
+        "appearance": "Appearance"
+    },
+    "dashboard": {
+        "title": "Dashboard",
+        "empty": "Your tag list is empty"
+    },
+    "tags": {
+        "title": "Tags",
+        "add": "Add tag",
+        "name": "Tag name",
+        "namePlaceholder": "tag name is unique",
+        "pageCount": "{count} page(s)",
+        "remove": "remove page",
+        "removeWarn": "This tag and all its pages will be removed.",
+        "confirmDelete": "Yes, delete {name}",
+        "created": "New tag created"
+    },
+    "pages": {
+        "addNew": "add new page",
+        "addFor": "Add page - {tag}",
+        "url": "URL",
+        "urlPlaceholder": "Page link",
+        "title": "Page title",
+        "titlePlaceholder": "Page title",
+        "openGraphFailed": "OpenGraph failed, need to set it manually.",
+        "scrap": "scrap",
+        "changeFavorite": "change favorite",
+        "confirmDelete": "Confirm delete page",
+        "keepIt": "No, I keep it",
+        "removeIt": "Yes, I remove it",
+        "removed": "Page was removed!",
+        "removeFailed": "Failed to remove page"
+    },
+    "newsletters": {
+        "title": "Newsletters",
+        "add": "Add newsletter",
+        "register": "Register newsletter (RSS)",
+        "registerAction": "register",
+        "urlPlaceholder": "ex : https://jster.net/atom.xml",
+        "count": "{count} newsletter(s)",
+        "saved": "New page saved",
+        "failed": "Something failed"
+    },
+    "search": {
+        "title": "Search result",
+        "foundPages": "Found {count} page(s)",
+        "foundTags": "Found {count} tag(s)",
+        "foundNewsletters": "Found {count} newsletter(s)"
+    }
+}

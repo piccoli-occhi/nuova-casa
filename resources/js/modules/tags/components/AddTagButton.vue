@@ -4,15 +4,15 @@
             ref="addPageModal"
         >
             <span slot="title">
-                Add tag
+                {{ t('tags.add') }}
             </span>
             <div
                 slot="text"
                 class="tag__modal"
             >
                 <p-input-text
-                    label="Tag name"
-                    placeholder="tag name is unique"
+                    :label="t('tags.name')"
+                    :placeholder="t('tags.namePlaceholder')"
                     required
                     block
                     v-model="newTagForm.name"
@@ -46,7 +46,7 @@
             </div>
             <div class="modal__footer">
                 <p-button @click="addPageModal.close()">
-                    cancel
+                    {{ t('common.cancel') }}
                 </p-button>
                 <p-button
                     type="secondary"
@@ -54,7 +54,7 @@
                     :loading="inProgress"
                     v-if="!searDone"
                 >
-                    next
+                    {{ t('common.next') }}
                     <p-icon icon="next"></p-icon>
                 </p-button>
                 <p-button
@@ -63,7 +63,7 @@
                     @click="tagStore.saveTag()"
                     :disabled="!newTagForm.icon"
                 >
-                    save <p-icon icon="save"></p-icon>
+                    {{ t('common.save') }} <p-icon icon="save"></p-icon>
                 </p-button>
             </div>
         </p-modal>
@@ -73,7 +73,7 @@
             @click="openModal()"
         >
             <p-icon icon="plus"></p-icon>
-            Add tag
+            {{ t('tags.add') }}
         </p-button>
     </div>
 </template>
@@ -83,10 +83,12 @@
     setup
 >
 import { onMounted, ref, watch } from "vue"
+import { useI18n } from "vue-i18n"
 import { useTag } from "../composables/useTag"
 
 const addPageModal = ref<HTMLElement | null>(null)
 const { newTagForm, tagStore, inProgress, searDone, allImages, status } = useTag()
+const { t } = useI18n()
 
 const props = defineProps<{ light?: boolean }>()
 
@@ -104,7 +106,7 @@ onMounted(() => {
                 type: "danger",
                 canclose: true,
                 timeout: 4000,
-                text: "Something failed",
+                text: t("newsletters.failed"),
             })
         }
         if (e === "success") {
@@ -112,7 +114,7 @@ onMounted(() => {
                 type: "success",
                 canclose: true,
                 timeout: 4000,
-                text: "New tag created",
+                text: t("tags.created"),
             })
             addPageModal.value.close()
         }

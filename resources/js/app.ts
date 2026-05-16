@@ -5,6 +5,7 @@ import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers"
 import type { DefineComponent } from "vue"
 import { createApp, h } from "vue"
 import { ZiggyVue } from "ziggy-js"
+import { i18n } from "./i18n"
 import { initializeTheme } from "./composables/useAppearance"
 import MasonryWall from '@yeger/vue-masonry-wall'
 
@@ -16,6 +17,7 @@ createInertiaApp({
     setup({ el, App, props, plugin }) {
         createApp({ render: () => h(App, props) })
             .use(plugin)
+            .use(i18n)
             .use(ZiggyVue)
             .use(MasonryWall)
             .mount(el)

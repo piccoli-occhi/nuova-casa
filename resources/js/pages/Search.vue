@@ -1,10 +1,10 @@
 <template>
-    <Head title="Search" />
+    <Head :title="t('search.title')" />
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="search-result">
             <div class="search-result__list" v-if="props.pages.length > 0">
                 <p-leaf>
-                    <h2>Found {{ props.pages.length }} page(s)</h2>
+                    <h2>{{ t('search.foundPages', { count: props.pages.length }) }}</h2>
                 </p-leaf>
                 <PageCard
                     v-for="item in props.pages"
@@ -15,7 +15,7 @@
             <!--  -->
             <div class="search-result__list" v-if="props.tags.length > 0">
                 <p-leaf>
-                    <h2>Found {{ props.tags.length }} tag(s)</h2>
+                    <h2>{{ t('search.foundTags', { count: props.tags.length }) }}</h2>
                 </p-leaf>
                 <TagCard
                     v-for="item in props.tags"
@@ -29,7 +29,7 @@
                 v-if="props.newsletters.length > 0"
             >
                 <p-leaf>
-                    <h2>Found {{ props.newsletters.length }} newsletters(s)</h2>
+                    <h2>{{ t('search.foundNewsletters', { count: props.newsletters.length }) }}</h2>
                 </p-leaf>
                 <RssCard
                     v-for="item in props.newsletters"
@@ -43,6 +43,7 @@
 
 <script setup lang="ts">
 import { Head } from "@inertiajs/vue3"
+import { useI18n } from "vue-i18n"
 import AppLayout from "@/layouts/AppLayout.vue"
 import { Newsletter, Page, Tag } from "@/modules/domain/Types"
 import RssCard from "@/modules/newsletters/components/RssCard.vue"
@@ -56,9 +57,11 @@ const props = defineProps<{
     newsletters: Newsletter[]
 }>()
 
+const { t } = useI18n()
+
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: "Search result",
+        title: t("search.title"),
         href: "/search",
     },
 ]

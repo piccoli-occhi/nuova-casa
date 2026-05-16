@@ -26,6 +26,8 @@
 import AppSidebarHeader from "@/components/AppSidebarHeader.vue"
 import type { BreadcrumbItemType, User } from "@/types"
 import { usePage } from "@inertiajs/vue3"
+import { computed } from "vue"
+import { useI18n } from "vue-i18n"
 
 interface NavItem {
     title: string
@@ -43,6 +45,7 @@ withDefaults(defineProps<Props>(), {
 
 const page = usePage()
 const authUser = page.props.auth.user as User
+const { t } = useI18n()
 
 const sidebarUser = {
     name: authUser.name,
@@ -50,11 +53,11 @@ const sidebarUser = {
     photo: authUser.avatar ?? "",
 }
 
-const mainNavItems: NavItem[] = [
-    { title: "Dashboard", href: "/dashboard", icon: "home" },
-    { title: "Tags", href: "/tags", icon: "bookmark" },
-    { title: "Newsletters", href: "/newsletters", icon: "mail" },
-]
+const mainNavItems = computed<NavItem[]>(() => [
+    { title: t("nav.dashboard"), href: "/dashboard", icon: "home" },
+    { title: t("nav.tags"), href: "/tags", icon: "bookmark" },
+    { title: t("nav.newsletters"), href: "/newsletters", icon: "mail" },
+])
 </script>
 
 <style scoped>

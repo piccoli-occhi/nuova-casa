@@ -8,7 +8,7 @@
         </div>
         <div slot="text">
             <p-badge>
-                {{ props.tag.children.length }} page(s)
+                {{ t('tags.pageCount', { count: props.tag.children.length }) }}
             </p-badge>
         </div>
         <div
@@ -19,7 +19,7 @@
                 <p-button
                     type="secondary"
                 >
-                    Modifier
+                    {{ t('common.edit') }}
                 </p-button>
             </Link>
         </div>
@@ -28,9 +28,11 @@
 
 <script lang="ts" setup>
 import { Link } from "@inertiajs/vue3"
+import { useI18n } from "vue-i18n"
 import type { Tag } from "@/modules/domain/Types"
 
 const props = defineProps<{ tag: Tag }>()
+const { t } = useI18n()
 </script>
 
 <style scoped>
