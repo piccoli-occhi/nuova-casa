@@ -2,16 +2,15 @@
     <div>
         <p-modal
             ref="addPageModal"
-            dark
         >
             <span slot="title">
-                Add page - {{ props.tag.name }}
+                {{ t('pages.addFor', { tag: props.tag.name }) }}
             </span>
             <span slot="text">
                 <div class="casa-add-page">
                     <p-input-text
-                        label="URL"
-                        placeholder="Page link"
+                        :label="t('pages.url')"
+                        :placeholder="t('pages.urlPlaceholder')"
                         required
                         block
                         v-model="newPageForm.url"
@@ -23,15 +22,15 @@
                         type="warning"
                         v-if="requiredInputs"
                     >
-                        OpenGraph failed, need to set it manually.
+                        {{ t('pages.openGraphFailed') }}
                     </p-alert>
                     <div
                         v-if="requiredInputs"
                         class="casa-add-page__part"
                     >
                         <p-input-text
-                            label="Page title"
-                            placeholder="Page title"
+                            :label="t('pages.title')"
+                            :placeholder="t('pages.titlePlaceholder')"
                             required
                             block
                             v-model="newPageForm.title"
@@ -90,7 +89,7 @@
                             />
                         </p-leaf>
                         <p-input-text
-                            label="title"
+                            :label="t('pages.title')"
                             block
                             v-model="newPageForm.title"
                             :error="newPageForm.errors.title"
@@ -100,7 +99,7 @@
             </span>
             <div class="casa-add-page__footer">
                 <p-button @click="addPageModal.close()">
-                    cancel
+                    {{ t('common.cancel') }}
                 </p-button>
                 <p-button
                     type="secondary"
@@ -108,23 +107,22 @@
                     v-if="!graphDone && !requiredInputs"
                     :loading="inProgress"
                 >
-                    scrap
+                    {{ t('pages.scrap') }}
                 </p-button>
                 <p-button
                     type="success"
                     @click="store.savePage()"
                     v-else
                 >
-                    save
+                    {{ t('common.save') }}
                 </p-button>
             </div>
         </p-modal>
         <p-button
-            dark
-            type="primary"
+            type="secondary"
             @click="openModal()"
         >
-            add new page
+            {{ t('pages.addNew') }}
         </p-button>
     </div>
 </template>
@@ -134,11 +132,13 @@
     setup
 >
 import { onMounted, ref, watch } from "vue"
+import { useI18n } from "vue-i18n"
 import { type Tag } from "@/modules/domain/Types"
 import retroDefault from "../../../../assets/404_retro.png"
 import { usePage } from "../stores/PageStore"
 
 const { store, inProgress, graphDone, newPageForm, status, requiredInputs, allImages, loadingImages } = usePage()
+const { t } = useI18n()
 
 const addPageModal = ref<HTMLElement | null>(null)
 const props = defineProps<{
@@ -155,7 +155,7 @@ onMounted(() => {
                 type: "danger",
                 canclose: true,
                 timeout: 4000,
-                text: "Something failed",
+                text: t("newsletters.failed"),
             })
         }
         if (e === "success") {
@@ -163,7 +163,7 @@ onMounted(() => {
                 type: "success",
                 canclose: true,
                 timeout: 4000,
-                text: "New page saved",
+                text: t("newsletters.saved"),
             })
             addPageModal.value.close()
         }

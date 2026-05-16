@@ -1,18 +1,13 @@
 <template>
-    <Head title="tags" />
+    <Head :title="t('tags.title')" />
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="casa-tags__head">
-            <p-leaf>
-                <h3>
-                    {{ props.tags.length }} tag(s)
-                </h3>
-            </p-leaf>
             <AddTagButton />
         </div>
         <div class="casa-tags__list">
             <masonry-wall
                 :items="props.tags"
-                :column-width="300"
+                :column-width="200"
                 :gap="16"
             >
                 <template #default="{item}">
@@ -31,6 +26,7 @@
     lang="ts"
 >
 import { Head } from "@inertiajs/vue3"
+import { useI18n } from "vue-i18n"
 import AppLayout from "@/layouts/AppLayout.vue"
 import { Page, Tag } from "@/modules/domain/Types"
 import AddTagButton from "@/modules/tags/components/AddTagButton.vue"
@@ -41,9 +37,11 @@ const props = defineProps<{
     tags: Tag[]
 }>()
 
+const { t } = useI18n()
+
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: "Tags",
+        title: t("tags.title"),
         href: "/tags",
     },
 ]
@@ -51,9 +49,6 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 <style scoped>
     .casa-tags__head {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 20px;
+        margin-bottom: 30px;
     }
 </style>

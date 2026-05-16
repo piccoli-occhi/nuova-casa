@@ -1,23 +1,22 @@
 <template>
-    <Head title="Dashboard" />
+    <Head :title="t('dashboard.title')" />
     <AppLayout :breadcrumbs="breadcrumbs">
         <p-alert
             v-if="props.pages.length === 0"
         >
             <div class="dashboard__empty">
                 <span>
-                    Your tag list is empty
+                    {{ t('dashboard.empty') }}
                 </span>
                 <AddTagButton :light="true">
-                    Create new
+                    {{ t('common.createNew') }}
                 </AddTagButton>
             </div>
         </p-alert>
         <masonry-wall
             :items="props.pages"
-            :column-width="330"
-            :max-columns="3"
-            :gap="16"
+            :column-width="200"
+            :gap="40"
         >
             <template #default="{item}">
                 <PageCard
@@ -31,6 +30,7 @@
 
 <script setup lang="ts">
 import { Head } from "@inertiajs/vue3"
+import { useI18n } from "vue-i18n"
 import AppLayout from "@/layouts/AppLayout.vue"
 import { Page } from "@/modules/domain/Types"
 import PageCard from "@/modules/pages/components/PageCard.vue"
@@ -40,9 +40,10 @@ import { type BreadcrumbItem } from "@/types"
 const props = defineProps<{
     pages: Page[]
 }>()
+const { t } = useI18n()
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: "Dashboard",
+        title: t("dashboard.title"),
         href: "/dashboard",
     },
 ]

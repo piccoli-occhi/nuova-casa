@@ -1,6 +1,5 @@
 <template>
     <p-card
-        dark
         radius
     >
         <div slot="header">

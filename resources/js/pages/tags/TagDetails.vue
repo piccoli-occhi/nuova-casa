@@ -9,7 +9,7 @@
                         {{ props.tag.name }}
                         -
                         <small>
-                            {{ props.tag.children.length }} page(s)
+                            {{ t('tags.pageCount', { count: props.tag.children.length }) }}
                         </small>
                     </h3>
                 </p-leaf>
@@ -19,9 +19,8 @@
             <div class="casa-tag-details__cards">
                 <masonry-wall
                     :items="props.tag.children"
-                    :column-width="330"
-                    :max-columns="3"
-                    :gap="16"
+                    :column-width="200"
+                    :gap="20"
                 >
                     <template #default="{item}">
                         <PageCard
@@ -41,6 +40,7 @@
     setup
 >
 import { Head, router, useForm, usePage } from "@inertiajs/vue3"
+import { useI18n } from "vue-i18n"
 import AppLayout from "@/layouts/AppLayout.vue"
 import { Tag } from "@/modules/domain/Types"
 import AddPageButton from "@/modules/pages/components/AddPageButton.vue"
@@ -49,10 +49,11 @@ import RemoveTag from "@/modules/pages/components/RemoveTag.vue"
 import { BreadcrumbItem } from "@/types"
 
 const props = defineProps<{ tag: Tag }>()
+const { t } = useI18n()
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: "Tags",
+        title: t("tags.title"),
         href: "/tags",
     },
     {

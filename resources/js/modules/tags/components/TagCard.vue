@@ -1,25 +1,25 @@
 <template>
-    <p-card radius>
+    <p-card :image="props.tag.icon">
         <div
             slot="title"
             class="for--title"
         >
-            <img :src="props.tag.icon" />
             {{ props.tag.name }}
+        </div>
+        <div slot="text">
+            <p-badge>
+                {{ t('tags.pageCount', { count: props.tag.children.length }) }}
+            </p-badge>
         </div>
         <div
             class="is--flex"
             slot="footer"
         >
-            <p-badge>
-                {{ props.tag.children.length }} page(s)
-            </p-badge>
             <Link :href="route('tag', {id: props.tag.id})">
                 <p-button
-                    dark
                     type="secondary"
                 >
-                    Modifier
+                    {{ t('common.edit') }}
                 </p-button>
             </Link>
         </div>
@@ -28,9 +28,11 @@
 
 <script lang="ts" setup>
 import { Link } from "@inertiajs/vue3"
+import { useI18n } from "vue-i18n"
 import type { Tag } from "@/modules/domain/Types"
 
 const props = defineProps<{ tag: Tag }>()
+const { t } = useI18n()
 </script>
 
 <style scoped>

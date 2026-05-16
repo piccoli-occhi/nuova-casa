@@ -1,27 +1,26 @@
 <template>
     <p-button
         type="danger"
-        dark
         @click="deleteTagModal.open()"
     >
-        remove page
+        {{ t('tags.remove') }}
     </p-button>
     <p-modal ref="deleteTagModal">
         <div slot="title">
-            Are you sure ?
+            {{ t('common.areYouSure') }}
         </div>
         <div slot="text">
-            This tag and its all pages will be removed.
+            {{ t('tags.removeWarn') }}
         </div>
         <div class="modal__footer">
             <p-button
                 @click="deleteTagModal.close()"
-            >Cancel</p-button>
+            >{{ t('common.cancel') }}</p-button>
             <p-button
                 type="danger"
                 @click="removeTag()"
             >
-                Yes, delete <b>{{ props.tag.name }}</b>
+                {{ t('tags.confirmDelete', { name: props.tag.name }) }}
             </p-button>
         </div>
     </p-modal>
@@ -30,6 +29,7 @@
 <script lang="ts" setup>
 import { router } from "@inertiajs/vue3"
 import { ref } from "vue"
+import { useI18n } from "vue-i18n"
 import { route } from "ziggy-js"
 import { Tag } from "@/modules/domain/Types"
 
@@ -37,6 +37,7 @@ const deleteTagModal = ref<HTMLElement | null>(null)
 const props = defineProps<{
     tag: Tag
 }>()
+const { t } = useI18n()
 
 function removeTag() {
     const handler = document.querySelector("p-notification-handler")
@@ -47,7 +48,7 @@ function removeTag() {
                 handler.pushNotification({
                     type: "success",
                     canclose: true,
-                    text: "Page was removed !",
+                    text: t("pages.removed"),
                     timeout: 4000,
                 })
             }
@@ -57,7 +58,7 @@ function removeTag() {
                 handler.pushNotification({
                     type: "danger",
                     canclose: true,
-                    text: "Failed to remove page",
+                    text: t("pages.removeFailed"),
                     timeout: 4000,
                 })
             }

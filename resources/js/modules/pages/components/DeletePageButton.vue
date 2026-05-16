@@ -1,19 +1,16 @@
 <template>
-    <p-modal
-        ref="editModal"
-        dark
-    >
+    <p-modal ref="editModal">
         <span slot="title">
             <div class="for__title">{{ props.page.title }}</div>
         </span>
-        <span slot="sub-title">Confirm delete page</span>
-        <span slot="text">Are you sure ?</span>
+        <span slot="sub-title">{{ t('pages.confirmDelete') }}</span>
+        <span slot="text">{{ t('common.areYouSure') }}</span>
         <p-button
             type="success"
             @click="editModal.close()"
             :disabled="isRemoving"
         >
-            No, I keep it
+            {{ t('pages.keepIt') }}
         </p-button>
         &nbsp;
         <p-button
@@ -21,18 +18,16 @@
             @click="removePage()"
             :disabled="isRemoving"
         >
-            <span>Yes, I remove it</span>
+            <span>{{ t('pages.removeIt') }}</span>
         </p-button>
     </p-modal>
     <p-button
         @click="editModal.open()"
         type="danger"
-        dark
     >
         <p-icon 
             size="20" 
-            icon="trash"
-            color="white"
+            icon="delete"
         ></p-icon>
     </p-button>
 </template>
@@ -43,6 +38,7 @@
 >
 import { router } from "@inertiajs/vue3"
 import { ref } from "vue"
+import { useI18n } from "vue-i18n"
 import { route } from "ziggy-js"
 import { Page } from "@/modules/domain/Types"
 
@@ -50,6 +46,7 @@ const props = defineProps<{ page: Page }>()
 const emit = defineEmits(["remove"])
 const editModal = ref<HTMLElement | null>(null)
 const isRemoving = ref<boolean>(false)
+const { t } = useI18n()
 
 function removePage() {
     const handler = document.querySelector("p-notification-handler")
@@ -60,7 +57,7 @@ function removePage() {
                 handler.pushNotification({
                     type: "success",
                     canclose: true,
-                    text: "Page was removed !",
+                    text: t("pages.removed"),
                     timeout: 4000,
                 })
             }
@@ -70,7 +67,7 @@ function removePage() {
                 handler.pushNotification({
                     type: "danger",
                     canclose: true,
-                    text: "Failed to remove page",
+                    text: t("pages.removeFailed"),
                     timeout: 4000,
                 })
             }

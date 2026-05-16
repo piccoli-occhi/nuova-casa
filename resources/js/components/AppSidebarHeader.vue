@@ -4,7 +4,6 @@
             <Breadcrumbs :breadcrumbs="breadcrumbs" />
             <p-input-text
                 placeholder="Search tag, page or newsletter"
-                dark
                 icon="search"
                 @keydown.enter="submitForm($event.target.value)"
             />

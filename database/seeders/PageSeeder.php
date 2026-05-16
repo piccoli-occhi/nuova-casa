@@ -20,11 +20,11 @@ class PageSeeder extends Seeder {
             'tag_id' => 1,
         ));
         DB::table('pages')->insert(array(
-            'url' => 'https://letsignit.com',
+            'url' => 'https://plantespourtous.co',
             'created_at' => date('Y-m-d H:i:s'),
-            'title' => 'Letsignit',
+            'title' => 'Plantes Pour Tous',
             'favorite' => false,
-            'icon' => 'https://cdn.prod.website-files.com/67bd90ae7191a4fe6076b68d/67bd90ae7191a4fe6076b9af_642edc5c8d1257656775ab18_Vector.svg',
+            'icon' => 'https://www.google.com/s2/favicons?domain=plantespourtous.co&sz=64',
             'user_id' => 1,
             'tag_id' => 1,
         ));

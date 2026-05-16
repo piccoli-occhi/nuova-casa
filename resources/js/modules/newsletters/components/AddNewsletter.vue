@@ -1,13 +1,13 @@
 <template>
     <p-modal ref="newsletterModal">
         <span slot="title">
-            Register newsletter (RSS)
+            {{ t('newsletters.register') }}
         </span>
         <span slot="text">
             <div class="rss__modal">
                 <p-input-text
-                    label="URL"
-                    placeholder="ex : https://jster.net/atom.xml"
+                    :label="t('pages.url')"
+                    :placeholder="t('newsletters.urlPlaceholder')"
                     required
                     block
                     v-model="newNewsletter.url"
@@ -18,14 +18,14 @@
 
                 <footer>
                     <p-button @click="newsletterModal.close()">
-                        cancel
+                        {{ t('common.cancel') }}
                     </p-button>
                     <p-button
                         type="secondary"
                         @click="addNews()"
                         :loading="isLoading"
                     >
-                        register
+                        {{ t('newsletters.registerAction') }}
                     </p-button>
                 </footer>
             </div>
@@ -36,7 +36,7 @@
         dark
         @click="newsletterModal.open()"
     >
-        Add newsletter
+        {{ t('newsletters.add') }}
     </p-button>
 </template>
 
@@ -45,10 +45,12 @@
     setup
 >
 import { ref, watch } from "vue"
+import { useI18n } from "vue-i18n"
 import { useNewsletter } from "../stores/AddNewsletterStore"
 
 const newsletterModal = ref<HTMLElement | null>(null)
 const { store, newNewsletter, isLoading, status } = useNewsletter()
+const { t } = useI18n()
 
 function addNews() {
     const overlay = document.querySelector("p-notification-handler")
@@ -60,7 +62,7 @@ function addNews() {
                 type: "danger",
                 canclose: true,
                 timeout: 4000,
-                text: "Something failed",
+                text: t("newsletters.failed"),
             })
         }
         if (e === "success") {
@@ -68,7 +70,7 @@ function addNews() {
                 type: "success",
                 canclose: true,
                 timeout: 4000,
-                text: "New page saved",
+                text: t("newsletters.saved"),
             })
 
             handler.stop()

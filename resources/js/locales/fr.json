@@ -1,0 +1,68 @@
+{
+    "common": {
+        "edit": "Modifier",
+        "save": "Enregistrer",
+        "cancel": "Annuler",
+        "delete": "Supprimer",
+        "yes": "Oui",
+        "no": "Non",
+        "areYouSure": "Êtes-vous sûr ?",
+        "createNew": "Créer",
+        "next": "Suivant"
+    },
+    "nav": {
+        "dashboard": "Tableau de bord",
+        "tags": "Tags",
+        "newsletters": "Newsletters",
+        "settings": "Paramètres",
+        "profile": "Profil",
+        "appearance": "Apparence"
+    },
+    "dashboard": {
+        "title": "Tableau de bord",
+        "empty": "Votre liste de tags est vide"
+    },
+    "tags": {
+        "title": "Tags",
+        "add": "Ajouter un tag",
+        "name": "Nom du tag",
+        "namePlaceholder": "le nom du tag doit être unique",
+        "pageCount": "{count} page(s)",
+        "remove": "supprimer la page",
+        "removeWarn": "Ce tag et toutes ses pages seront supprimés.",
+        "confirmDelete": "Oui, supprimer {name}",
+        "created": "Nouveau tag créé"
+    },
+    "pages": {
+        "addNew": "ajouter une page",
+        "addFor": "Ajouter une page - {tag}",
+        "url": "URL",
+        "urlPlaceholder": "Lien de la page",
+        "title": "Titre",
+        "titlePlaceholder": "Titre de la page",
+        "openGraphFailed": "Échec d'OpenGraph, saisissez les infos manuellement.",
+        "scrap": "scraper",
+        "changeFavorite": "changer le favori",
+        "confirmDelete": "Confirmer la suppression",
+        "keepIt": "Non, je la garde",
+        "removeIt": "Oui, supprimer",
+        "removed": "Page supprimée !",
+        "removeFailed": "Échec de la suppression"
+    },
+    "newsletters": {
+        "title": "Newsletters",
+        "add": "Ajouter une newsletter",
+        "register": "Enregistrer une newsletter (RSS)",
+        "registerAction": "enregistrer",
+        "urlPlaceholder": "ex : https://jster.net/atom.xml",
+        "count": "{count} newsletter(s)",
+        "saved": "Nouvelle page enregistrée",
+        "failed": "Une erreur est survenue"
+    },
+    "search": {
+        "title": "Résultats de recherche",
+        "foundPages": "{count} page(s) trouvée(s)",
+        "foundTags": "{count} tag(s) trouvé(s)",
+        "foundNewsletters": "{count} newsletter(s) trouvée(s)"
+    }
+}
